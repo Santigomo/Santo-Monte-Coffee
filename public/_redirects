@@ -1,0 +1,2 @@
+# El dominio pages.dev y www redirigen al dominio principal se configura en Cloudflare (Rules).
+/es/* /:splat 301

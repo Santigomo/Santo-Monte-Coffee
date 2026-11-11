@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://santomontecoffee.online/sitemap-index.xml
