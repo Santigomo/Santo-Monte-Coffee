@@ -1,0 +1,29 @@
+{
+  "numero": 6,
+  "titulo": {
+    "es": "Comercial vs. especialidad",
+    "en": "Commercial vs. specialty"
+  },
+  "bajada": {
+    "es": "6 claves para saber qué estás tomando.",
+    "en": "6 keys to know what you're drinking."
+  },
+  "cuerpo": {
+    "es": [
+      "01 Grano: con defectos o sin defectos. 02 Puntaje: 80+ puntos SCA o sin catar. 03 Origen: «café colombiano» o finca, productor, variedad, proceso y altura.",
+      "04 Tostión: oscura para esconder o pensada para mostrar. 05 Frescura: fecha de vencimiento o fecha de tostión. 06 Taza: amargo que pide azúcar o dulzor natural.",
+      "Antes de comprar, lee la bolsa. Si no lo dice, pregunta. Si no saben… ya sabes."
+    ],
+    "en": [
+      "01 Bean: defective or defect-free. 02 Score: 80+ SCA points, or never cupped. 03 Origin: “Colombian coffee”, or farm, producer, variety, process and altitude.",
+      "04 Roast: dark to hide, or designed to show. 05 Freshness: expiry date, or roast date. 06 Cup: bitter and begging for sugar, or naturally sweet.",
+      "Before you buy, read the bag. If it doesn't say, ask. If they don't know… now you do."
+    ]
+  },
+  "portadaEs": "../../../assets/piezas/contenido-octubre/es/la-montana-no-miente/l06-comercial-vs-especialidad-swiss/sm_l06_es_01.webp",
+  "portadaEn": "../../../assets/piezas/contenido-octubre/en/la-montana-no-miente/l06-commercial-vs-specialty-swiss/sm_l06_en_01.webp",
+  "portadaAlt": {
+    "es": "Portada de diseño suizo con grandes números verdes.",
+    "en": "Swiss-style cover with large green numbers."
+  }
+}

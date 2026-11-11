@@ -1,0 +1,29 @@
+{
+  "numero": 1,
+  "titulo": {
+    "es": "Selección",
+    "en": "Selection"
+  },
+  "bajada": {
+    "es": "Todo empieza con una cereza roja.",
+    "en": "It all starts with a red cherry."
+  },
+  "cuerpo": {
+    "es": [
+      "Todo café de especialidad empieza con una decisión: recoger solo la cereza roja.",
+      "En el mismo árbol hay cerezas verdes, rojas y sobremaduras. Elegirlas a mano, pasarlas por agua para retirar las que flotan y clasificar el grano por densidad es lo que marca la diferencia mucho antes del tostador.",
+      "Lo que no pasa la selección tiene nombre: pasilla. De ella hablamos en la lección 04."
+    ],
+    "en": [
+      "Every specialty coffee starts with one decision: pick only the red cherries.",
+      "Green, ripe and overripe cherries grow on the same tree. Picking by hand, floating out the bad ones and sorting beans by density is what makes the difference long before roasting.",
+      "What doesn't pass has a name: pasilla. More on that in lesson 04."
+    ]
+  },
+  "portadaEs": "../../../assets/piezas/contenido-octubre/es/la-montana-no-miente/l01-seleccion-minimalismo/sm_l01_es_01.webp",
+  "portadaEn": "../../../assets/piezas/contenido-octubre/en/la-montana-no-miente/l01-selection-minimalism/sm_l01_en_01.webp",
+  "portadaAlt": {
+    "es": "Portada minimalista: una cereza de café roja con su grano y el título «selección».",
+    "en": "Minimalist cover: a red coffee cherry with its bean and the title “selection”."
+  }
+}

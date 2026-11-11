@@ -1,0 +1,17 @@
+{
+  "orden": 1,
+  "variedad": { "es": "Caturra", "en": "Caturra" },
+  "proceso": "lavado",
+  "perfil": { "es": "Lo dulce y clásico", "en": "Sweet and classic" },
+  "paraTiSi": { "es": "Estás empezando en el café de especialidad", "en": "You're just getting into specialty coffee" },
+  "titular": { "es": "El clásico de todos los días, bien hecho.", "en": "The everyday classic, done right." },
+  "historia": {
+    "es": ["Nació como una mutación natural del Borbón en Brasil y llegó a ser cerca de la mitad del café de Colombia.", "Es el clásico, el de todos los días, pero bien hecho: dulce, redondo y fácil de querer."],
+    "en": ["Born as a natural Bourbon mutation in Brazil, it once made up nearly half of Colombia's coffee.", "The everyday classic, done right: sweet, round and easy to love."]
+  },
+  "notas": { "es": ["Caramelo", "Melcocha", "Frutos secos"], "en": ["Caramel", "Taffy", "Nuts"] },
+  "presentaciones": [250],
+  "bolsa": "../../../assets/productos/bolsa-caturra-lavado-250g.png",
+  "foto": "../../../assets/fotos/producto/caturra-250g-01-2400.jpg",
+  "fotoAlt": { "es": "Bolsa negra de Santo Monte Caturra lavado de 250 g con la etiqueta escrita a mano.", "en": "Black Santo Monte bag of washed Caturra, 250 g, with its hand-written label." }
+}

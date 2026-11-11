@@ -1,0 +1,18 @@
+{
+  "orden": 5,
+  "variedad": { "es": "Pacamara Amarillo", "en": "Pacamara Amarillo" },
+  "proceso": "natural",
+  "perfil": { "es": "Lo intenso y profundo", "en": "Intense and deep" },
+  "paraTiSi": { "es": "Te gusta el chocolate y el caramelo", "en": "You love chocolate and caramel" },
+  "titular": { "es": "El mismo grano, secado dentro de su cereza.", "en": "The same bean, dried inside its cherry." },
+  "historia": {
+    "es": ["Es el mismo Pacamara Amarillo de nuestro lavado, pero secado dentro de su cereza durante semanas.", "El fruto le da cuerpo, dulzor y notas profundas. Pocas bolsas."],
+    "en": ["The same Pacamara Amarillo as our washed lot, but dried inside its cherry for weeks.", "The fruit gives it body, sweetness and deep notes. Very few bags."]
+  },
+  "notas": { "es": ["Chocoso", "Cacao", "Caramelo", "Cítrico"], "en": ["Chocolatey", "Cacao", "Caramel", "Citrus"] },
+  "presentaciones": [250],
+  "limitado": true,
+  "bolsa": "../../../assets/productos/bolsa-pacamara-amarillo-natural-250g.png",
+  "foto": "../../../assets/fotos/producto/pacamara-amarillo-natural-250g-2400.jpg",
+  "fotoAlt": { "es": "Bolsa dorada de Santo Monte Pacamara Amarillo natural de 250 g.", "en": "Gold Santo Monte bag of natural Pacamara Amarillo, 250 g." }
+}

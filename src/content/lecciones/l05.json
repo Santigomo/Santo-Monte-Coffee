@@ -1,0 +1,29 @@
+{
+  "numero": 5,
+  "titulo": {
+    "es": "Tostión",
+    "en": "Roasting"
+  },
+  "bajada": {
+    "es": "Ahí se decide si el origen se muestra… o se esconde.",
+    "en": "Where origin is revealed… or hidden."
+  },
+  "cuerpo": {
+    "es": [
+      "Tostar es cocinar el grano con precisión. Fase 1, secado: el grano pierde humedad y pasa de verde a amarillo. Fase 2, Maillard: nacen el color, el dulzor y cientos de aromas. Fase 3, desarrollo: desde el primer crack se equilibran la acidez, el dulzor y el cuerpo.",
+      "La curva de tostión es el mapa de todo eso. Y la zona comercial está más allá del segundo crack, donde todo sabe a quemado.",
+      "Más oscuro no es más fuerte. Es más tostado. Por eso cada bolsa de Santo Monte lleva su fecha de tostión."
+    ],
+    "en": [
+      "Roasting is cooking the bean with precision. Phase 1, drying: the bean loses moisture and turns from green to yellow. Phase 2, Maillard: colour, sweetness and hundreds of aromas are born. Phase 3, development: from first crack on, acidity, sweetness and body get balanced.",
+      "The roast curve maps all of it. The commercial zone lies past second crack, where everything tastes burnt.",
+      "Darker isn't stronger. It's just more roasted. That's why every Santo Monte bag carries its roast date."
+    ]
+  },
+  "portadaEs": "../../../assets/piezas/contenido-octubre/es/la-montana-no-miente/l05-tostion-futurista/sm_l05_es_01.webp",
+  "portadaEn": "../../../assets/piezas/contenido-octubre/en/la-montana-no-miente/l05-roasting-futuristic/sm_l05_en_01.webp",
+  "portadaAlt": {
+    "es": "Portada futurista con un grano de café de cromo líquido naranja y violeta.",
+    "en": "Futuristic cover with a liquid-chrome coffee bean in orange and violet."
+  }
+}

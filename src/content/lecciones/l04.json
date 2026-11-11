@@ -1,0 +1,29 @@
+{
+  "numero": 4,
+  "titulo": {
+    "es": "Pasilla",
+    "en": "Pasilla"
+  },
+  "bajada": {
+    "es": "El café que nadie te muestra.",
+    "en": "The coffee nobody shows you."
+  },
+  "cuerpo": {
+    "es": [
+      "La Federación Nacional de Cafeteros la define como los granos con defectos: brocados, vinagres, negros, partidos, astillados. Se separan cuando el café se clasifica para exportar. Lo mejor sale del país; durante décadas, la pasilla se quedó aquí.",
+      "La fórmula comercial es simple: comprar barato y tostar muy oscuro, hasta que el amargo y el humo tapen los defectos… y también el origen.",
+      "No es culpa del caficultor: la pasilla aparece en toda cosecha. El problema es venderla como si fuera lo mejor de nuestra tierra. No nombramos marcas. No hace falta. Exige saber qué estás tomando."
+    ],
+    "en": [
+      "Colombia's Coffee Growers Federation defines it as defective beans: borer-damaged, sour, black, broken, chipped. They're sorted out when coffee is graded for export. The best leaves the country; for decades, pasilla stayed home.",
+      "The commercial formula is simple: buy cheap, roast very dark, until bitterness and smoke cover the defects… and the origin too.",
+      "It's not the farmer's fault: pasilla shows up in every harvest. The problem is selling it as the best our land has to offer. We name no brands. We don't need to. Demand to know what you're drinking."
+    ]
+  },
+  "portadaEs": "../../../assets/piezas/contenido-octubre/es/la-montana-no-miente/l04-pasilla-editorial/sm_l04_es_01.webp",
+  "portadaEn": "../../../assets/piezas/contenido-octubre/en/la-montana-no-miente/l04-pasilla-editorial/sm_l04_en_01.webp",
+  "portadaAlt": {
+    "es": "Portada con diseño de revista en blanco y negro sobre la pasilla.",
+    "en": "Black-and-white magazine-style cover about pasilla."
+  }
+}

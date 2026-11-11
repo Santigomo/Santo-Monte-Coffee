@@ -1,0 +1,9 @@
+{
+  "orden": 1,
+  "disponible": false,
+  "nombre": { "es": "Kit V60", "en": "V60 kit" },
+  "metodo": { "es": "Filtrado", "en": "Pour-over" },
+  "descripcion": { "es": "Todo para servir una taza limpia en casa, con nuestra receta de bitácora.", "en": "Everything to brew a clean cup at home, with our logbook recipe." },
+  "foto": "../../../assets/fotos/proceso/v60-preparando-2400.jpg",
+  "fotoAlt": { "es": "Café filtrándose en un V60.", "en": "Coffee dripping through a V60." }
+}

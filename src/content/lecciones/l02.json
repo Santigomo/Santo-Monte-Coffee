@@ -1,0 +1,29 @@
+{
+  "numero": 2,
+  "titulo": {
+    "es": "Lavado vs. natural",
+    "en": "Washed vs. natural"
+  },
+  "bajada": {
+    "es": "El mismo café puede saber muy distinto. Por el proceso.",
+    "en": "The same coffee can taste very different. Processing."
+  },
+  "cuerpo": {
+    "es": [
+      "Lavado: se retira el fruto, se fermenta en tanque, se lava y se seca. El resultado es claridad, una taza limpia y brillante.",
+      "Natural: el grano se seca dentro de su cereza durante semanas. El resultado es intensidad, con más cuerpo, dulzor y fruta madura.",
+      "En nuestro Lote 1 tenemos el mismo Pacamara Amarillo en lavado y en natural. La mejor forma de entenderlo es probarlos lado a lado."
+    ],
+    "en": [
+      "Washed: the fruit is removed, the beans ferment in a tank, then get washed and dried. The result is clarity: a clean, bright cup.",
+      "Natural: the bean dries inside its cherry for weeks. The result is intensity: more body, sweetness and ripe fruit.",
+      "Our Lot 1 has the same Pacamara Amarillo both washed and natural. The best way to get it is to taste them side by side."
+    ]
+  },
+  "portadaEs": "../../../assets/piezas/contenido-octubre/es/la-montana-no-miente/l02-procesos-glassmorphism/sm_l02_es_01.webp",
+  "portadaEn": "../../../assets/piezas/contenido-octubre/en/la-montana-no-miente/l02-processing-glassmorphism/sm_l02_en_01.webp",
+  "portadaAlt": {
+    "es": "Portada con efecto de vidrio estriado sobre el corte de una cereza de café.",
+    "en": "Cover with a fluted-glass effect over a cross-section of a coffee cherry."
+  }
+}

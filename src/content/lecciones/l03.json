@@ -1,0 +1,29 @@
+{
+  "numero": 3,
+  "titulo": {
+    "es": "Defectos",
+    "en": "Defects"
+  },
+  "bajada": {
+    "es": "Los villanos de tu taza.",
+    "en": "The villains in your cup."
+  },
+  "cuerpo": {
+    "es": [
+      "Para que un café sea de especialidad se revisan 350 g de café verde, grano por grano. Según la SCA no puede tener ningún defecto primario y máximo 5 secundarios.",
+      "Grano negro, vinagre, broca, hongo, inmaduro, partido: cada uno deja su huella en la taza, desde lo medicinal hasta lo avinagrado.",
+      "¿Y los granos que no pasan la prueba? Se llaman pasilla."
+    ],
+    "en": [
+      "To count as specialty, 350 g of green coffee get inspected bean by bean. Per the SCA, it can't have a single primary defect and no more than 5 secondary ones.",
+      "Black, sour, borer, mold, quaker, broken: each one leaves a mark in the cup, from medicinal to vinegary.",
+      "And the beans that fail? They're called pasilla."
+    ]
+  },
+  "portadaEs": "../../../assets/piezas/contenido-octubre/es/la-montana-no-miente/l03-defectos-pixelart/sm_l03_es_01.webp",
+  "portadaEn": "../../../assets/piezas/contenido-octubre/en/la-montana-no-miente/l03-defects-pixelart/sm_l03_en_01.webp",
+  "portadaAlt": {
+    "es": "Portada estilo videojuego de 8 bits con granos de café pixelados.",
+    "en": "8-bit video game style cover with pixelated coffee beans."
+  }
+}

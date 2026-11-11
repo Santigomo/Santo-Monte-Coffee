@@ -1,0 +1,17 @@
+{
+  "orden": 3,
+  "variedad": { "es": "Typica Mejorado", "en": "Typica Mejorado" },
+  "proceso": "lavado",
+  "perfil": { "es": "Lo fresco y frutal", "en": "Fresh and fruity" },
+  "paraTiSi": { "es": "Buscas algo frutal y brillante", "en": "You want something fruity and bright" },
+  "titular": { "es": "La Typica que no es Typica.", "en": "The Typica that isn't a Typica." },
+  "historia": {
+    "es": ["Se cree que surgió en Ecuador. Pero el nombre engaña: análisis de ADN la señalan como un cruce de Borbón con una línea etíope.", "Los nombres pueden mentir. La taza, no."],
+    "en": ["It's believed to have emerged in Ecuador. But the name misleads: DNA analysis points to a cross between Bourbon and an Ethiopian line.", "Names can lie. The cup can't."]
+  },
+  "notas": { "es": ["Sandía", "Cítrico", "Frutos rojos"], "en": ["Watermelon", "Citrus", "Red fruit"] },
+  "presentaciones": [250],
+  "bolsa": "../../../assets/productos/bolsa-typica-mejorado-lavado-250g.png",
+  "foto": "../../../assets/fotos/producto/typica-mejorado-lavado-250g-2400.jpg",
+  "fotoAlt": { "es": "Bolsa de Santo Monte Typica Mejorado lavado de 250 g.", "en": "Santo Monte bag of washed Typica Mejorado, 250 g." }
+}

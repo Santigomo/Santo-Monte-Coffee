@@ -1,0 +1,17 @@
+{
+  "orden": 4,
+  "variedad": { "es": "Pacamara Amarillo", "en": "Pacamara Amarillo" },
+  "proceso": "lavado",
+  "perfil": { "es": "Una taza limpia y luminosa", "en": "A clean, luminous cup" },
+  "paraTiSi": { "es": "Buscas algo frutal y brillante", "en": "You want something fruity and bright" },
+  "titular": { "es": "Una taza limpia y luminosa.", "en": "A clean, luminous cup." },
+  "historia": {
+    "es": ["Pacamara es un cruce de Pacas y Maragogipe creado en El Salvador, de granos muy grandes. Esta versión madura en amarillo, y el lavado deja la fruta clara y sin ruido.", "Pruébalo junto a su versión natural: es la mejor forma de entender qué hace el proceso."],
+    "en": ["Pacamara is a Pacas × Maragogipe cross from El Salvador, with very large beans. This one ripens yellow, and washing keeps the fruit clear and noise-free.", "Taste it next to its natural sibling: it's the best way to understand what processing does."]
+  },
+  "notas": { "es": ["Melocotón", "Durazno", "Frutos amarillos"], "en": ["Peach", "Stone fruit", "Yellow fruits"] },
+  "presentaciones": [250],
+  "bolsa": "../../../assets/productos/bolsa-pacamara-amarillo-lavado-250g.png",
+  "foto": "../../../assets/fotos/producto/pacamara-amarillo-lavado-250g-negra-01-2400.jpg",
+  "fotoAlt": { "es": "Bolsa negra de Santo Monte Pacamara Amarillo lavado de 250 g.", "en": "Black Santo Monte bag of washed Pacamara Amarillo, 250 g." }
+}

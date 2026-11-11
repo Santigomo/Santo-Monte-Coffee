@@ -1,0 +1,7 @@
+{
+  "orden": 2,
+  "disponible": false,
+  "nombre": { "es": "Kit prensa francesa", "en": "French press kit" },
+  "metodo": { "es": "Inmersión", "en": "Immersion" },
+  "descripcion": { "es": "Cuerpo y dulzor sin complicaciones, para la mesa de todos los días.", "en": "Body and sweetness, no fuss, for the everyday table." }
+}

@@ -1,0 +1,18 @@
+{
+  "orden": 2,
+  "variedad": { "es": "Borbón Rosado", "en": "Pink Bourbon" },
+  "proceso": "lavado",
+  "perfil": { "es": "La miel y la fruta suave", "en": "Honey and soft fruit" },
+  "paraTiSi": { "es": "Te gusta la miel y el durazno", "en": "You love honey and peach" },
+  "titular": { "es": "Rosado por fuera, etíope por dentro.", "en": "Pink outside, Ethiopian inside." },
+  "historia": {
+    "es": ["A pesar del nombre, análisis genéticos indican que no es un Borbón: está emparentado con variedades etíopes.", "Su cereza madura en rosado y en la taza deja miel, melcocha y fruta suave."],
+    "en": ["Despite the name, genetic analyses indicate it isn't a Bourbon: it's related to Ethiopian varieties.", "Its cherries ripen pink, and the cup brings honey, taffy and soft fruit."]
+  },
+  "notas": { "es": ["Melcocha", "Miel", "Cítrico", "Durazno"], "en": ["Taffy", "Honey", "Citrus", "Peach"] },
+  "presentaciones": [250],
+  "limitado": true,
+  "bolsa": "../../../assets/productos/bolsa-borbon-rosado-lavado-250g.png",
+  "foto": "../../../assets/fotos/producto/borbon-rosado-250g-2400.jpg",
+  "fotoAlt": { "es": "Bolsa rosada de Santo Monte Borbón Rosado lavado de 250 g.", "en": "Pink Santo Monte bag of washed Pink Bourbon, 250 g." }
+}
