@@ -1,0 +1,23 @@
+---
+/**
+ * Logo de Santo Monte: el ojo original (versión sticker, mejor para tamaños pequeños)
+ * junto al wordmark original. Ambos son vectores optimizados desde assets/logo/svg.
+ * tono="crema" para fondo oscuro, tono="oscuro" para fondo claro.
+ */
+interface Props {
+  tono?: 'crema' | 'oscuro';
+  /** Altura del ojo en px. */
+  alto?: number;
+  class?: string;
+  conWordmark?: boolean;
+}
+const { tono = 'crema', alto = 30, class: clase = '', conWordmark = true } = Astro.props;
+// Proporciones de los SVG originales.
+const ojoW = Math.round(alto * (1000 / 561));
+const wmH = Math.round(alto * 0.52);
+const wmW = Math.round(wmH * (1000 / 192));
+---
+<span class:list={['inline-flex items-center gap-3', clase]}>
+  <img src={`/brand/ojo-sticker-${tono}.svg`} width={ojoW} height={alto} alt="" decoding="async" />
+  {conWordmark && <img src={`/brand/wordmark-${tono}.svg`} width={wmW} height={wmH} alt="Santo Monte" decoding="async" />}
+</span>

@@ -1,0 +1,407 @@
+/* ==========================================================================
+   SANTO MONTE · Estilos globales
+   Identidad "Vigilia Mineral": sobria, melancólica, brutalista, con un toque de vidrio.
+   Basado en assets/css/santo-monte.css y assets/css/tokens.json.
+   ========================================================================== */
+@import 'tailwindcss';
+
+/* ---------- Fuentes autoalojadas (OFL) ---------- */
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-latin-wdth-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-latin-ext-wdth-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gloock';
+  src: url('/fonts/gloock-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nothing You Could Do';
+  src: url('/fonts/nothing-you-could-do-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ---------- Tokens de marca para Tailwind ---------- */
+@theme {
+  --color-negro: #0e0d0b; /* Negro tierra */
+  --color-verde: #2f3b2a; /* Verde monte */
+  --color-musgo: #5e6b4e; /* Musgo */
+  --color-crema: #d9c3a0; /* Crema de café */
+  --color-leche: #efe6d6; /* Crema leche */
+  --color-papel: #f7f1e6; /* Papel */
+
+  --font-display: 'Archivo', 'Arial Narrow', sans-serif;
+  --font-serif: 'Gloock', Georgia, serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --font-hand: 'Nothing You Could Do', cursive;
+
+  --text-step--1: clamp(0.74rem, 0.71rem + 0.15vw, 0.84rem);
+  --text-step-0: clamp(0.95rem, 0.92rem + 0.2vw, 1.06rem);
+  --text-step-1: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
+  --text-step-2: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem);
+  --text-step-3: clamp(2.3rem, 1.6rem + 3.2vw, 4.4rem);
+  --text-step-4: clamp(3.2rem, 1.9rem + 6.4vw, 8rem);
+  --text-step-5: clamp(4rem, 2rem + 10vw, 12.5rem);
+
+  --radius-sm: 2px;
+  --ease-monte: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  :root {
+    --rule: 1.5px; /* grosor de línea de la firma */
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --line: color-mix(in srgb, var(--color-leche) 32%, transparent);
+    --fg: var(--color-leche);
+    --fg-muted: var(--color-crema);
+    color-scheme: dark;
+    scroll-padding-top: 5rem;
+  }
+  html {
+    background: var(--color-negro);
+    color: var(--fg);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-mono);
+    font-size: var(--text-step-0);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-crema);
+    color: var(--color-negro);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-crema);
+    outline-offset: 3px;
+  }
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+/* ---------- Tipografía de marca ---------- */
+@utility font-condensed {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+}
+@utility sm-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+}
+@utility sm-contorno {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fg);
+  paint-order: stroke fill;
+}
+@utility sm-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.08;
+}
+@utility sm-etiqueta {
+  font-family: var(--font-mono);
+  font-size: var(--text-step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+@utility sm-mano {
+  font-family: var(--font-hand);
+  color: var(--color-crema);
+  line-height: 1.2;
+}
+
+/* ---------- Fondos (ajustan solos el color del texto) ---------- */
+@utility sm-bg-negro {
+  background-color: var(--color-negro);
+  --fg: var(--color-leche);
+  --fg-muted: var(--color-crema);
+  --line: color-mix(in srgb, var(--color-leche) 32%, transparent);
+  color: var(--fg);
+}
+@utility sm-bg-verde {
+  background-color: var(--color-verde);
+  --fg: var(--color-leche);
+  --fg-muted: var(--color-crema);
+  --line: color-mix(in srgb, var(--color-leche) 34%, transparent);
+  color: var(--fg);
+}
+@utility sm-bg-leche {
+  background-color: var(--color-leche);
+  --fg: var(--color-negro);
+  --fg-muted: var(--color-verde);
+  --line: color-mix(in srgb, var(--color-negro) 38%, transparent);
+  color: var(--fg);
+  color-scheme: light;
+}
+@utility sm-bg-papel {
+  background-color: var(--color-papel);
+  --fg: var(--color-negro);
+  --fg-muted: var(--color-verde);
+  --line: color-mix(in srgb, var(--color-negro) 38%, transparent);
+  color: var(--fg);
+  color-scheme: light;
+}
+
+/* Texturas: curvas de nivel y grilla de 1,5 px. Se aplican en un pseudo-elemento
+   para poder moverlas (parallax) sin repintar el fondo de la sección. */
+@utility sm-textura {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--textura, url('/brand/curvas-crema.svg'));
+    background-size: cover;
+    background-position: center;
+    opacity: var(--textura-opacidad, 1);
+    transform: translate3d(0, var(--parallax, 0px), 0);
+  }
+}
+@utility sm-grilla {
+  background-image: url('/brand/grilla-crema.svg');
+  background-size: 120px 120px;
+}
+@utility sm-grilla-oscuro {
+  background-image: url('/brand/grilla-negro.svg');
+  background-size: 120px 120px;
+}
+
+/* ---------- Componentes ---------- */
+@layer components {
+  /* Contenedor con márgenes de marca */
+  .sm-wrap {
+    width: 100%;
+    max-width: 1360px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .sm-regla {
+    border-color: var(--line);
+    border-width: 0;
+  }
+
+  /* Vidrio (liquid glass), solo en detalles */
+  .sm-vidrio {
+    background: color-mix(in srgb, var(--color-leche) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-leche) 22%, transparent);
+    border-radius: 14px;
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, white 18%, transparent);
+  }
+
+  /* Botones brutalistas: línea de 1,5 px, casi sin radio */
+  .sm-boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7em;
+    min-height: 48px;
+    padding: 0.85em 1.4em;
+    border: var(--rule) solid currentColor;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-step--1);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1.2;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background-color 0.25s var(--ease-monte),
+      color 0.25s var(--ease-monte),
+      border-color 0.25s var(--ease-monte),
+      transform 0.25s var(--ease-monte);
+  }
+  .sm-boton:hover {
+    background: var(--fg);
+    color: var(--color-negro);
+    border-color: var(--fg);
+  }
+  .sm-bg-leche .sm-boton:hover,
+  .sm-bg-papel .sm-boton:hover {
+    color: var(--color-leche);
+  }
+  .sm-boton:active {
+    transform: translateY(1px);
+  }
+  .sm-boton--lleno {
+    background: var(--color-crema);
+    border-color: var(--color-crema);
+    color: var(--color-negro);
+  }
+  .sm-boton--lleno:hover {
+    background: var(--color-leche);
+    border-color: var(--color-leche);
+    color: var(--color-negro);
+  }
+  .sm-bg-leche .sm-boton--lleno,
+  .sm-bg-papel .sm-boton--lleno {
+    background: var(--color-verde);
+    border-color: var(--color-verde);
+    color: var(--color-leche);
+  }
+  .sm-bg-leche .sm-boton--lleno:hover,
+  .sm-bg-papel .sm-boton--lleno:hover {
+    background: var(--color-negro);
+    border-color: var(--color-negro);
+  }
+  .sm-boton .sm-flecha {
+    transition: transform 0.3s var(--ease-monte);
+  }
+  .sm-boton:hover .sm-flecha {
+    transform: translateX(4px);
+  }
+
+  /* Enlace subrayado con línea que crece */
+  .sm-link {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 var(--rule) no-repeat;
+    transition: background-size 0.35s var(--ease-monte);
+    text-decoration: none;
+  }
+  .sm-link:hover,
+  .sm-link[aria-current='page'] {
+    background-size: 100% var(--rule);
+  }
+
+  /* Bolsa recortada, siempre completa y con sombra */
+  .sm-bolsa {
+    display: block;
+    height: auto;
+    filter: drop-shadow(0 30px 30px rgb(0 0 0 / 0.45));
+  }
+
+  /* Ficha técnica (productor / origen / altura) */
+  .sm-ficha {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-step--1);
+  }
+  .sm-ficha th,
+  .sm-ficha td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.7em 0;
+    border-top: var(--rule) solid var(--line);
+  }
+  .sm-ficha tr:last-child th,
+  .sm-ficha tr:last-child td {
+    border-bottom: var(--rule) solid var(--line);
+  }
+  .sm-ficha th {
+    width: 42%;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--fg-muted);
+  }
+  .sm-ficha td {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* ---------- Animaciones ----------
+   Solo se ocultan elementos si el script de movimiento confirmó que puede animarlos
+   (clase .sm-motion en <html>). Sin JS o con movimiento reducido, todo se ve normal. */
+.sm-motion [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+}
+.sm-motion [data-reveal='fade'] {
+  transform: none;
+}
+
+/* Cinta de notas que se desplaza en bucle */
+.sm-cinta {
+  display: flex;
+  width: max-content;
+  animation: sm-cinta 38s linear infinite;
+}
+.sm-cinta-wrap:hover .sm-cinta {
+  animation-play-state: paused;
+}
+@keyframes sm-cinta {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sm-cinta {
+    animation: none;
+  }
+  @view-transition {
+    navigation: none;
+  }
+}
