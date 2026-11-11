@@ -95,53 +95,53 @@ Hola, Santo Monte. Quiero pedir:
 
 ---
 
-## 3. Desplegar en Cloudflare Pages
+## 3. Desplegar en Cloudflare
 
-El sitio es 100 % estático: Cloudflare solo publica la carpeta `dist/`.
+El sitio es 100 % estático. Cloudflare lo compila y publica la carpeta `dist/` como **Worker con Static Assets**, que es lo que el panel crea hoy por defecto. La configuración está en `wrangler.jsonc`.
 
-### Opción A · Conectar el repositorio de GitHub (recomendada)
+### Conectar el repositorio (ya hecho)
 
-Con esta opción, cada `git push` a `main` publica el sitio solo.
+En **Workers & Pages** → proyecto `santo-monte-coffee` → **Settings → Build**:
 
-1. Entra a <https://dash.cloudflare.com> → **Workers & Pages** → **Create** → pestaña **Pages** → **Import an existing Git repository**.
-2. Autoriza GitHub y elige `Santigomo/Santo-Monte-Coffee`.
-3. Configura el build:
+| Campo | Valor |
+|---|---|
+| Git repository | `Santigomo/Santo-Monte-Coffee`, rama `main` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Variable de entorno | `NODE_VERSION` = `22.23.4` (opcional: ya se lee de `.node-version`) |
 
-   | Campo | Valor |
-   |---|---|
-   | Production branch | `main` |
-   | Framework preset | `Astro` |
-   | Build command | `npm run build` |
-   | Build output directory | `dist` |
-   | Variable de entorno | `NODE_VERSION` = `22.23.4` (opcional: Cloudflare ya lee `.node-version`) |
+Cada `git push` a `main` publica el sitio automáticamente.
 
-4. **Save and Deploy**. En unos minutos queda en `https://<proyecto>.pages.dev`.
+### URL de prueba (workers.dev)
 
-### Conectar el dominio `santomontecoffee.online`
+`wrangler.jsonc` trae `"workers_dev": true`, así que después del primer deploy el sitio queda en `https://santo-monte-coffee.<tu-subdominio>.workers.dev`. Si no aparece, actívala en **Settings → Domains & Routes → workers.dev → Enable**.
 
-1. En el proyecto de Pages: **Custom domains** → **Set up a custom domain** → `santomontecoffee.online`.
-2. Si el dominio ya usa los DNS de Cloudflare, el registro se crea solo. Si no, Cloudflare te muestra el registro `CNAME` que tienes que crear donde compraste el dominio.
-3. Agrega también `www.santomontecoffee.online`. Después, en **Rules → Redirect Rules**, redirige `www` al dominio principal con un 301.
-4. El certificado HTTPS se emite automáticamente.
+### Conectar el dominio `santomontecoffee.online` (comprado en Hostinger)
 
-### Opción B · Subir desde la terminal (sin GitHub)
+El dominio tiene que estar administrado por Cloudflare:
+
+1. En Cloudflare: **Add a domain** → `santomontecoffee.online` → plan Free. Cloudflare te da **dos nameservers**.
+2. En Hostinger: **Dominios → santomontecoffee.online → DNS / Nameservers → Cambiar nameservers** y pega los dos de Cloudflare.
+3. Cuando el dominio aparezca como **Active** en Cloudflare (de minutos a unas horas), entra al Worker → **Settings → Domains & Routes → Add → Custom domain** y agrega `santomontecoffee.online` y `www.santomontecoffee.online`. Los registros DNS y el certificado HTTPS se crean solos.
+
+### Opción manual (desde la terminal)
 
 ```bash
 npm run build
 ```
 
 ```bash
-npx wrangler pages deploy dist --project-name santo-monte
+npx wrangler deploy
 ```
 
 La primera vez, Wrangler abre el navegador para iniciar sesión en Cloudflare.
 
 ### Qué ya viene configurado
 
+- `wrangler.jsonc`: sirve `dist/`, usa `404.html` para rutas inexistentes y agrega la barra final a las URL.
 - `public/_headers`: caché permanente para `/_astro/*` y `/fonts/*`, más cabeceras de seguridad.
 - `public/_redirects`: redirecciones.
 - `public/robots.txt` y `sitemap-index.xml` (se genera al compilar).
-- Página `404` con la marca.
 
 ### Después de publicar
 
@@ -155,6 +155,7 @@ La primera vez, Wrangler abre el navegador para iniciar sesión en Cloudflare.
 ```
 assets/        Material original de la marca (fuente; no se publica directamente)
 public/        Archivos servidos tal cual (fuentes, favicon, OG, SVG, _headers)
+wrangler.jsonc Configuración de Cloudflare (Worker con Static Assets)
 src/content/   Cafés, kits y lecciones (JSON editables)
 src/data/      Datos de la marca, del lote y recetas
 src/i18n/      Textos y rutas en español e inglés

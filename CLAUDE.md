@@ -6,7 +6,8 @@ Guía de decisiones del sitio web de **Santo Monte · Café de altura y especial
 
 - Vitrina de marca estática. **No** hay pagos, carrito, cuentas ni base de datos.
 - Los pedidos se hacen por **WhatsApp** (`wa.me/573028411167`) con un mensaje prellenado que incluye producto, presentación y cantidad. Instagram (@santomontecoffee) queda como canal secundario.
-- Dominio de producción: `https://santomontecoffee.online`. Despliegue: Cloudflare Pages.
+- Dominio de producción: `https://santomontecoffee.online` (comprado en Hostinger; debe usar los nameservers de Cloudflare).
+- Despliegue: Cloudflare **Worker con Static Assets** (`wrangler.jsonc`, sirve `dist/`), conectado a GitHub. Build: `npm run build`; deploy: `npx wrangler deploy`. `_headers` y `_redirects` funcionan igual que en Pages.
 
 ## Decisiones de contenido (confirmadas con el dueño)
 
@@ -37,6 +38,7 @@ Guía de decisiones del sitio web de **Santo Monte · Café de altura y especial
 assets/                 Fuente de marca (NO editar; las imágenes se importan desde aquí)
 public/                 Se sirve tal cual: fuentes, favicon, OG, SVG de marca optimizados,
                         _headers y _redirects (Cloudflare), robots.txt
+wrangler.jsonc          Worker de Cloudflare con Static Assets (404 y barra final)
 scripts/optimize-svg.mjs  Copia y optimiza logos/texturas de assets/ a public/brand/
 src/
   content.config.ts     Esquemas de las colecciones
