@@ -1,0 +1,18 @@
+---
+/** Ficha técnica del lote: productor, origen y altura (como en la etiqueta de la bolsa). */
+import lote from '@/data/lote.json';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations, formatAltura } from '@/i18n/utils';
+
+interface Props { lang: Lang; extra?: { label: string; valor: string }[]; class?: string }
+const { lang, extra = [], class: clase } = Astro.props;
+const t = useTranslations(lang);
+---
+<table class:list={['sm-ficha', clase]}>
+  <tbody>
+    <tr><th scope="row">{t('ficha.productor')}</th><td>{lote.productor}</td></tr>
+    <tr><th scope="row">{t('ficha.origen')}</th><td>{lote.municipio}, {lote.departamento}</td></tr>
+    <tr><th scope="row">{t('ficha.altura')}</th><td>{formatAltura(lote.alturaMsnm, lang)} {t('lote.msnm')}</td></tr>
+    {extra.map((f) => <tr><th scope="row">{f.label}</th><td>{f.valor}</td></tr>)}
+  </tbody>
+</table>

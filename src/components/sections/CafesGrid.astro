@@ -1,0 +1,35 @@
+---
+/** Grilla brutalista de los cafés del lote, con líneas de 1,5 px entre celdas. */
+import CafeCard from '@/components/product/CafeCard.astro';
+import FichaLote from '@/components/brand/FichaLote.astro';
+import lote from '@/data/lote.json';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import type { Cafe } from '@/lib/cafes';
+
+interface Props { lang: Lang; cafes: Cafe[]; nivel?: 'h1' | 'h2' }
+const { lang, cafes, nivel = 'h2' } = Astro.props;
+const t = useTranslations(lang);
+const Titulo = nivel;
+---
+<section id="cafes" class="sm-bg-verde sm-textura" style="--textura:url('/brand/curvas-musgo.svg')" data-parallax="100" aria-labelledby="cafes-titulo">
+  <div class="sm-wrap pb-16 pt-20 md:pb-24 md:pt-28">
+    <div class="mb-12 grid gap-8 lg:grid-cols-12 lg:items-end" data-reveal>
+      <div class="lg:col-span-7">
+        <p class="sm-etiqueta mb-5">{t('lote.titulo')} {lote.numero} · {cafes.length} {lang === 'es' ? 'cafés' : 'coffees'}</p>
+        <Titulo id="cafes-titulo" class="sm-display text-step-5">{t('lote.titulo')} {Number(lote.numero)}</Titulo>
+        <p class="sm-serif mt-4 text-step-2 text-crema">{lang === 'es' ? 'Un mismo monte. Distintas formas de mirarlo.' : 'One mountain. Different ways of seeing it.'}</p>
+      </div>
+      <FichaLote lang={lang} class="lg:col-span-4 lg:col-start-9" />
+    </div>
+
+    <div class="sm-celdas grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" data-reveal-group>
+      {cafes.map((cafe, i) => <CafeCard cafe={cafe} lang={lang} total={cafes.length} indice={i} />)}
+    </div>
+  </div>
+</section>
+<style>
+  /* Líneas de la grilla a 1,5 px */
+  .sm-celdas { border: solid var(--line); border-width: var(--rule) 0 0 var(--rule); }
+  .sm-celdas > :global(*) { border: solid var(--line); border-width: 0 var(--rule) var(--rule) 0; }
+</style>

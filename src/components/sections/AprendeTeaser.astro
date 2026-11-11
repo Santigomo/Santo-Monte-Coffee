@@ -1,0 +1,37 @@
+---
+/** Adelanto de la serie educativa "La montaña no miente". */
+import { getCollection } from 'astro:content';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations, path } from '@/i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const lecciones = (await getCollection('lecciones')).sort((a, b) => a.data.numero - b.data.numero);
+const base = path('aprende', lang);
+---
+<section class="sm-bg-papel" aria-labelledby="aprende-titulo">
+  <div class="sm-wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+    <div class="lg:col-span-5" data-reveal>
+      <p class="sm-etiqueta mb-5">{lang === 'es' ? 'Serie · 6 lecciones' : 'Series · 6 lessons'}</p>
+      <h2 id="aprende-titulo" class="sm-display text-step-4">{t('seccion.aprende')}</h2>
+      <p class="mt-6 max-w-md">
+        {lang === 'es' ? 'Aprende a diferenciar un café comercial de uno de especialidad. Compártela con quien diga que «todo el café sabe igual».' : 'Learn to tell commercial coffee from specialty coffee. Share it with whoever says “all coffee tastes the same”.'}
+      </p>
+      <a href={base} class="sm-boton sm-boton--lleno mt-8">{lang === 'es' ? 'Empezar la serie' : 'Start the series'} <span class="sm-flecha" aria-hidden="true">→</span></a>
+    </div>
+    <ol class="grid sm:grid-cols-2 lg:col-span-7" data-reveal-group>
+      {lecciones.map((l) => (
+        <li class="border-t border-[var(--line)]" style="border-top-width: var(--rule)">
+          <a href={`${base}#leccion-${l.data.numero}`} class="group flex items-baseline gap-4 py-5 pr-4">
+            <span class="sm-etiqueta">L0{l.data.numero}</span>
+            <span>
+              <span class="sm-serif sm-link block text-step-1">{l.data.titulo[lang]}</span>
+              <span class="mt-1 block text-step--1 opacity-80">{l.data.bajada[lang]}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

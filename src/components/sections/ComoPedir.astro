@@ -1,0 +1,35 @@
+---
+/** Cómo pedir: tres pasos y el llamado principal a WhatsApp. Instagram queda como canal secundario. */
+import site from '@/data/site.json';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { waLink } from '@/lib/whatsapp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const es = lang === 'es';
+const pasos = es
+  ? ['Elige tu café.', 'Escríbenos por WhatsApp: el mensaje ya va armado.', 'Acordamos pago y entrega.']
+  : ['Pick your coffee.', 'Message us on WhatsApp: the message is ready to send.', 'We agree on payment and delivery.'];
+---
+<section id="pedir" class="sm-bg-verde sm-textura" style="--textura:url('/brand/curvas-crema.svg'); --textura-opacidad:.8" data-parallax="80" aria-labelledby="pedir-titulo">
+  <div class="sm-wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12 lg:items-end">
+    <div class="lg:col-span-7" data-reveal>
+      <p class="sm-etiqueta mb-5">{es ? 'Cómo pedir' : 'How to order'}</p>
+      <h2 id="pedir-titulo" class="sm-display text-step-5">{t('precio.pregunta')}</h2>
+      <ol class="mt-10 max-w-xl">
+        {pasos.map((p, i) => (
+          <li class="flex gap-5 border-t border-[var(--line)] py-4 last:border-b" style="border-width: var(--rule) 0">
+            <span class="sm-etiqueta">0{i + 1}</span><span>{p}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class="flex flex-col gap-4 lg:col-span-4 lg:col-start-9" data-reveal data-delay="0.1">
+      <a href={waLink(t('wa.general'))} target="_blank" rel="noopener" class="sm-boton sm-boton--lleno w-full !min-h-14 !text-step-0">{t('cta.whatsapp')} <span class="sm-flecha" aria-hidden="true">→</span></a>
+      <a href={`https://www.instagram.com/${site.instagram}/`} target="_blank" rel="noopener" class="sm-boton w-full">{es ? 'O por DM' : 'Or via DM'} · @{site.instagram}</a>
+      <p class="sm-mano mt-2 text-step-1">{es ? 'te escribo de vuelta' : 'I’ll write back'}</p>
+    </div>
+  </div>
+</section>

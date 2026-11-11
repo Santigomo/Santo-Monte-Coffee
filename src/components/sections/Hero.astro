@@ -1,0 +1,75 @@
+---
+/**
+ * Hero: "LO QUE EL MONTE VIO" sobre curvas de nivel, con las cinco bolsas del lote
+ * en abanico (composición de la pieza "Los precios del monte").
+ */
+import Bolsa from '@/components/product/Bolsa.astro';
+import lote from '@/data/lote.json';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations, path, formatAltura } from '@/i18n/utils';
+import { nombreCafe, type Cafe } from '@/lib/cafes';
+import { waLink } from '@/lib/whatsapp';
+
+interface Props { lang: Lang; cafes: Cafe[] }
+const { lang, cafes } = Astro.props;
+const t = useTranslations(lang);
+
+// Abanico: la bolsa del centro (Borbón Rosado) al frente y más grande.
+const orden = ['pacamara-amarillo-lavado', 'caturra-lavado', 'borbon-rosado-lavado', 'pacamara-amarillo-natural', 'typica-mejorado-lavado'];
+const abanico = orden.map((id) => cafes.find((c) => c.id === id)).filter((c): c is Cafe => Boolean(c));
+const estilos = [
+  'left-[0%] w-[27%] z-10 bottom-[4%]',
+  'left-[15%] w-[29%] z-20 bottom-[2%]',
+  'left-[33%] w-[34%] z-30 bottom-0',
+  'left-[56%] w-[29%] z-20 bottom-[2%]',
+  'left-[73%] w-[27%] z-10 bottom-[4%]',
+];
+---
+<section class="sm-bg-negro sm-textura relative overflow-hidden" data-parallax="120" aria-labelledby="hero-titulo">
+  <div class="sm-grilla pointer-events-none absolute inset-0 -z-10 opacity-60" aria-hidden="true"></div>
+  <div class="sm-wrap grid min-h-[calc(100svh-4rem)] items-center gap-10 pb-10 pt-10 lg:grid-cols-12 lg:gap-6 lg:pb-16">
+    <div class="lg:col-span-6 xl:col-span-6">
+      <p class="sm-etiqueta mb-6">{t('lote.titulo')} {lote.numero} · {lote.finca} · {lote.municipio}, {lote.departamento}</p>
+      <h1 id="hero-titulo" class="sm-display text-step-5">
+        <span class="block">{lang === 'es' ? 'Lo que' : 'What the'}</span>
+        <span class="block">{lang === 'es' ? 'el monte' : 'mountain'}</span>
+        <span class="block">{lang === 'es' ? 'vio' : 'saw'}</span>
+      </h1>
+      <p class="sm-serif mt-6 text-step-2 text-crema">{t('lote.cafes')}</p>
+      <p class="mt-5 max-w-md text-step-0 text-leche/85">
+        {lang === 'es'
+          ? 'Café de altura y especialidad de Finca Anaya. Cinco variedades, cinco formas de mirar la misma montaña.'
+          : 'High-altitude specialty coffee from Finca Anaya. Five varieties, five ways of looking at the same mountain.'}
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={path('cafes', lang)} class="sm-boton sm-boton--lleno">{t('cta.verCafes')} <span class="sm-flecha" aria-hidden="true">→</span></a>
+        <a href={waLink(t('wa.general'))} target="_blank" rel="noopener" class="sm-boton">{t('cta.whatsapp')}</a>
+      </div>
+    </div>
+
+    <div class="relative lg:col-span-6 xl:col-span-6">
+      <div class="relative mx-auto aspect-[10/9] w-full max-w-[640px]">
+        {abanico.map((cafe, i) => (
+          <div class:list={['absolute', estilos[i]]} data-rise>
+            <Bolsa
+              src={cafe.data.bolsa}
+              alt={`${lang === 'es' ? 'Bolsa de' : 'Bag of'} ${nombreCafe(cafe, lang)}, 250 g`}
+              sizes="(min-width: 1024px) 220px, 34vw"
+              widths={[160, 240, 320, 440]}
+              prioridad={i === 2}
+            />
+          </div>
+        ))}
+      </div>
+      <p class="sm-mano absolute -top-2 right-2 rotate-[-6deg] text-step-1 lg:-top-6 lg:right-6" aria-hidden="true">{t('frase.aprobado').toLowerCase()}</p>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--line)]" style="border-top-width: var(--rule)">
+    <div class="sm-wrap sm-etiqueta grid grid-cols-2 gap-2 py-4 !text-leche/75 md:grid-cols-3">
+      <span>{lote.finca} · {lote.municipio}, {lote.departamento}</span>
+      <span class="text-right md:text-center">{formatAltura(lote.alturaMsnm, lang)} {t('lote.msnm')}</span>
+      <span class="hidden text-right md:block">{lang === 'es' ? 'Desliza' : 'Scroll'} ↓</span>
+    </div>
+  </div>
+</section>

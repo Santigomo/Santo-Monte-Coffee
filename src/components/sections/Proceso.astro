@@ -1,0 +1,37 @@
+---
+/** "Cada bolsa pasa por mis manos": tira de fotos del proceso. */
+import { Image } from 'astro:assets';
+import granos from '../../../assets/fotos/proceso/granos-tostados-01-2400.jpg';
+import molino from '../../../assets/fotos/proceso/molino-y-granos-2400.jpg';
+import v60 from '../../../assets/fotos/proceso/v60-servido-2400.jpg';
+import manos from '../../../assets/fotos/proceso/manos-pegando-sticker-2400.jpg';
+import type { Lang } from '@/i18n/ui';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const es = lang === 'es';
+const fotos = [
+  { src: granos, alt: es ? 'Granos de café recién tostados.' : 'Freshly roasted coffee beans.', pie: es ? 'Tostión' : 'Roast', clase: 'aspect-[4/5]' },
+  { src: molino, alt: es ? 'Molino manual junto a granos de café.' : 'Hand grinder next to coffee beans.', pie: es ? 'Molienda' : 'Grind', clase: 'aspect-[4/5] md:mt-16' },
+  { src: v60, alt: es ? 'Café recién servido desde un V60.' : 'Coffee freshly served from a V60.', pie: es ? 'Taza' : 'Cup', clase: 'aspect-[4/5]' },
+  { src: manos, alt: es ? 'Manos pegando la etiqueta de Santo Monte en una bolsa.' : 'Hands sticking the Santo Monte label on a bag.', pie: es ? 'Etiqueta a mano' : 'Hand-labelled', clase: 'aspect-[4/5] md:mt-16' },
+];
+---
+<section class="sm-bg-negro" aria-labelledby="proceso-titulo">
+  <div class="sm-wrap py-20 md:py-28">
+    <div class="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-reveal>
+      <h2 id="proceso-titulo" class="sm-display max-w-3xl text-step-4">{es ? 'Cada bolsa pasa por mis manos' : 'Every bag goes through my hands'}</h2>
+      <p class="max-w-sm text-leche/85">{es ? 'Seleccionar, tostar, probar, etiquetar. Sin atajos: la montaña no miente.' : 'Sort, roast, taste, label. No shortcuts: the mountain doesn’t lie.'}</p>
+    </div>
+    <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5" data-reveal-group>
+      {fotos.map((f, i) => (
+        <figure class:list={[f.clase.includes('mt-16') ? 'md:mt-16' : '']}>
+          <div class="overflow-hidden">
+            <Image src={f.src} alt={f.alt} widths={[320, 480, 640, 800]} sizes="(min-width: 768px) 23vw, 46vw" quality={70} class="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-[var(--ease-monte)] hover:scale-[1.04]" />
+          </div>
+          <figcaption class="sm-etiqueta mt-3 flex justify-between"><span>{f.pie}</span><span>0{i + 1}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

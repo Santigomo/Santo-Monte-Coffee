@@ -1,0 +1,60 @@
+---
+/**
+ * Kits de métodos de preparación. Hoy no están a la venta: se muestran como
+ * "Próximamente" con un botón para pedir aviso. Al poner "disponible": true en
+ * src/content/kits/*.json, el botón cambia a "Pedir por WhatsApp".
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { waLink } from '@/lib/whatsapp';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const kits = (await getCollection('kits')).sort((a, b) => a.data.orden - b.data.orden);
+const es = lang === 'es';
+const hayDisponibles = kits.some((k) => k.data.disponible);
+---
+<section id="kits" class="sm-bg-negro sm-textura border-t border-[var(--line)]" style="border-top-width: var(--rule); --textura:url('/brand/curvas-crema.svg'); --textura-opacidad:.7" aria-labelledby="kits-titulo">
+  <div class="sm-wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+    <div class="lg:col-span-5" data-reveal>
+      <p class="sm-etiqueta mb-5">{es ? 'Métodos de preparación' : 'Brewing methods'}</p>
+      <h2 id="kits-titulo" class="leading-[0.9]">
+        <span class="sm-display block text-step-4">Kits</span>
+        {!hayDisponibles && <span class="sm-contorno block text-step-4">{es ? 'Próximamente' : 'Coming soon'}</span>}
+      </h2>
+      <p class="mt-6 max-w-md text-leche/85">
+        {es ? 'Estamos armando kits para que prepares en casa como en nuestras bitácoras. Escríbenos y te avisamos primero.' : 'We’re putting together kits so you can brew at home like in our logbooks. Message us and you’ll be the first to know.'}
+      </p>
+    </div>
+    <ul class="grid gap-5 sm:grid-cols-2 lg:col-span-7" data-reveal-group>
+      {kits.map((kit) => {
+        const d = kit.data;
+        const nombre = d.nombre[lang];
+        const href = waLink(d.disponible ? `${t('wa.general')} ${nombre}.` : `${t('wa.kit')} ${nombre}.`);
+        return (
+          <li class="sm-vidrio flex flex-col overflow-hidden !rounded-sm">
+            <div class="relative aspect-[4/3] overflow-hidden bg-verde">
+              {d.foto ? (
+                <Image src={d.foto} alt={d.fotoAlt?.[lang] ?? ''} widths={[360, 540, 720]} sizes="(min-width: 1024px) 26vw, (min-width: 640px) 45vw, 92vw" quality={68} class="h-full w-full object-cover opacity-80" />
+              ) : (
+                <div class="sm-textura grid h-full place-items-center" style="--textura:url('/brand/curvas-crema.svg')">
+                  <img src="/brand/ojo-sticker-crema.svg" alt="" width="140" height="79" loading="lazy" class="w-28 opacity-90" />
+                </div>
+              )}
+              {!d.disponible && <span class="sm-etiqueta absolute left-3 top-3 bg-negro px-2 py-1 !text-crema">{es ? 'Próximamente' : 'Coming soon'}</span>}
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5">
+              <p class="sm-etiqueta">{d.metodo[lang]}</p>
+              <h3 class="sm-display text-step-3">{nombre}</h3>
+              <p class="text-step--1 text-leche/85">{d.descripcion[lang]}</p>
+              <a href={href} target="_blank" rel="noopener" class="sm-boton mt-auto">{d.disponible ? t('cta.whatsapp') : t('cta.avisame')}</a>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>

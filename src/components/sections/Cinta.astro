@@ -1,0 +1,18 @@
+---
+/** Cinta en movimiento con las notas de taza del lote (decorativa). */
+import type { Lang } from '@/i18n/ui';
+import type { Cafe } from '@/lib/cafes';
+
+interface Props { lang: Lang; cafes: Cafe[] }
+const { lang, cafes } = Astro.props;
+const notas = [...new Set(cafes.flatMap((c) => c.data.notas[lang]))];
+---
+<div class="sm-cinta-wrap overflow-hidden bg-crema py-3 text-negro" aria-hidden="true">
+  <div class="sm-cinta">
+    {[0, 1].map(() => (
+      <p class="font-condensed flex shrink-0 items-center whitespace-nowrap text-step-2 uppercase">
+        {notas.map((n) => (<><span class="px-5">{n}</span><span class="opacity-60">✶</span></>))}
+      </p>
+    ))}
+  </div>
+</div>

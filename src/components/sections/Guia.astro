@@ -1,0 +1,32 @@
+---
+/** Guía "¿Cuál es tu café?": lista suiza numerada que lleva a cada ficha. */
+import type { Lang } from '@/i18n/ui';
+import { cafePath } from '@/i18n/utils';
+import { nombreCafe, type Cafe } from '@/lib/cafes';
+
+interface Props { lang: Lang; cafes: Cafe[] }
+const { lang, cafes } = Astro.props;
+---
+<section class="sm-bg-leche sm-grilla-oscuro" aria-labelledby="guia-titulo">
+  <div class="sm-wrap grid gap-12 py-20 md:py-28 lg:grid-cols-12">
+    <div class="lg:col-span-4" data-reveal>
+      <p class="sm-etiqueta mb-5">{lang === 'es' ? 'Guía' : 'Guide'}</p>
+      <h2 id="guia-titulo" class="sm-display text-step-4">{lang === 'es' ? <>¿Cuál es<br />tu café?</> : <>Which one<br />is yours?</>}</h2>
+      <p class="mt-6 max-w-sm">
+        {lang === 'es' ? 'Elige por lo que te gusta en la taza. Si dudas, escríbenos y te ayudamos a elegir.' : 'Pick by what you like in the cup. Not sure? Message us and we’ll help you choose.'}
+      </p>
+    </div>
+    <ol class="lg:col-span-8" data-reveal-group>
+      {cafes.map((cafe, i) => (
+        <li class="border-t border-[var(--line)] last:border-b" style="border-width: var(--rule) 0">
+          <a href={cafePath(cafe.id, lang)} class="group grid grid-cols-[3.5rem_1fr_auto] items-center gap-4 py-5 transition-colors duration-300 hover:bg-verde hover:text-leche md:grid-cols-[6rem_1fr_1fr_auto] md:px-4">
+            <span class="sm-display text-step-3 text-verde transition-colors group-hover:text-crema">{String(i + 1).padStart(2, '0')}</span>
+            <span class="sm-serif text-step-1 md:text-step-2">{cafe.data.perfil[lang]}</span>
+            <span class="sm-etiqueta col-start-2 !text-current opacity-80 md:col-start-auto">{nombreCafe(cafe, lang)}</span>
+            <span class="row-span-2 text-step-1 transition-transform duration-300 group-hover:translate-x-1 md:row-span-1" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
