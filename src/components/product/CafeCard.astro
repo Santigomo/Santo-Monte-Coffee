@@ -1,0 +1,52 @@
+---
+/**
+ * Tarjeta de café para grillas: número, bolsa, variedad, proceso en contorno,
+ * notas, "Pregunta por el tuyo" y accesos a la ficha y a WhatsApp.
+ */
+import Bolsa from './Bolsa.astro';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations, cafePath } from '@/i18n/utils';
+import { nombreCafe, mensajePedido, type Cafe } from '@/lib/cafes';
+import { waPedido } from '@/lib/whatsapp';
+
+interface Props { cafe: Cafe; lang: Lang; total: number; indice: number }
+const { cafe, lang, total, indice } = Astro.props;
+const t = useTranslations(lang);
+const d = cafe.data;
+const nombre = nombreCafe(cafe, lang);
+const href = cafePath(cafe.id, lang);
+const wa = waPedido({ producto: nombre, presentacion: `${d.presentaciones[0]} g`, cantidad: 1 }, mensajePedido(lang));
+const num = String(indice + 1).padStart(2, '0');
+---
+<article class="group relative flex flex-col border-[var(--line)]" aria-labelledby={`cafe-${cafe.id}`}>
+  <div class="sm-etiqueta flex items-center justify-between px-5 pt-5 !text-leche/75">
+    <span>{num} / {String(total).padStart(2, '0')}</span>
+    {d.limitado && <span class="border border-crema px-2 py-0.5 !text-crema" style="border-width: var(--rule)">{t('ficha.limitado')}</span>}
+  </div>
+
+  <a href={href} class="relative mx-auto block w-[62%] max-w-[260px] pb-2 pt-6" tabindex="-1" aria-hidden="true">
+    <div class="transition-transform duration-500 ease-[var(--ease-monte)] group-hover:-translate-y-3" data-tilt>
+      <Bolsa src={d.bolsa} alt="" sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 60vw" widths={[240, 360, 480, 600]} />
+    </div>
+  </a>
+
+  <div class="flex flex-1 flex-col gap-4 px-5 pb-6 pt-4">
+    <h3 id={`cafe-${cafe.id}`} class="leading-none">
+      <a href={href} class="after:absolute after:inset-0 after:content-['']">
+        <span class="sm-serif block text-step-2">{d.variedad[lang]}</span>
+        <span class="sm-contorno mt-1 block text-step-3">{t(`proceso.${d.proceso}`)}</span>
+      </a>
+    </h3>
+    <p class="sm-etiqueta !tracking-[0.12em] !text-leche">{d.notas[lang].join(' · ')}</p>
+    <p class="text-step--1 text-leche/80">{t('ficha.paraTi')} {d.paraTiSi[lang].toLowerCase()}.</p>
+
+    <div class="mt-auto space-y-3 pt-2">
+      <p class="font-condensed flex items-baseline justify-between bg-crema px-4 py-2 text-step-1 uppercase text-negro">
+        <span>{d.presentaciones[0]} g</span><span>{t('precio.pregunta')}</span>
+      </p>
+      <a href={wa} target="_blank" rel="noopener" class="sm-boton relative z-10 w-full">
+        {t('cta.whatsapp')} <span class="sm-flecha" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</article>
