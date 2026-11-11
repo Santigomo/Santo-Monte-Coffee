@@ -1,0 +1,18 @@
+// Configuración de Cloudflare Workers (Static Assets).
+// El sitio es estático: Cloudflare compila con `npm run build` y sirve la carpeta dist/.
+// _headers y _redirects de public/ se aplican igual que en Pages.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "santo-monte-coffee",
+  "compatibility_date": "2026-06-01",
+  "assets": {
+    "directory": "./dist",
+    // Rutas inexistentes muestran dist/404.html con estado 404.
+    "not_found_handling": "404-page",
+    // /cafes → /cafes/ (coincide con trailingSlash: 'always' de Astro).
+    "html_handling": "auto-trailing-slash"
+  },
+  // Activa la URL *.workers.dev. El dominio propio se agrega en el panel
+  // (Settings → Domains & Routes) cuando el dominio esté en Cloudflare.
+  "workers_dev": true
+}
