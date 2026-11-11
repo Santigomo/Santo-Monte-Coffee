@@ -1,0 +1,114 @@
+---
+/**
+ * Barra superior, la firma de marca: SANTO MONTE | sección | navegación.
+ * Fija arriba, con vidrio sutil. En móvil, el menú se abre a pantalla completa.
+ */
+import Logo from './Logo.astro';
+import site from '@/data/site.json';
+import { useTranslations, path } from '@/i18n/utils';
+import { languages, type Lang, type RouteKey } from '@/i18n/ui';
+import { waLink } from '@/lib/whatsapp';
+
+interface Props {
+  lang: Lang;
+  seccion: string;
+  activa?: RouteKey;
+  alternates: Record<Lang, string>;
+}
+const { lang, seccion, activa, alternates } = Astro.props;
+const t = useTranslations(lang);
+const otro: Lang = lang === 'es' ? 'en' : 'es';
+
+const links: { key: RouteKey; label: string }[] = [
+  { key: 'cafes', label: t('nav.cafes') },
+  { key: 'origen', label: t('nav.origen') },
+  { key: 'aprende', label: t('nav.aprende') },
+];
+const wa = waLink(t('wa.general'));
+---
+<header class="sm-topbar sticky top-0 z-50 border-b border-[var(--line)] bg-negro/80 backdrop-blur-md supports-[backdrop-filter]:bg-negro/65" style="border-bottom-width: var(--rule)">
+  <div class="sm-wrap flex h-16 items-center justify-between gap-4">
+    <a href={path('inicio', lang)} class="shrink-0" aria-label={`${site.nombre} · ${t('seccion.inicio')}`}>
+      <Logo alto={30} />
+    </a>
+
+    <p class="sm-etiqueta hidden flex-1 items-center gap-4 !text-leche/80 lg:flex" aria-hidden="true">
+      <span class="h-5 border-l border-[var(--line)]" style="border-left-width: var(--rule)"></span>
+      <span class="truncate">{seccion}</span>
+    </p>
+
+    <nav aria-label={t('nav.principal')} class="hidden md:block">
+      <ul class="flex items-center gap-7 font-mono text-step--1 uppercase tracking-[0.16em]">
+        {links.map((l) => (
+          <li>
+            <a href={path(l.key, lang)} class="sm-link py-2" aria-current={activa === l.key ? 'page' : undefined}>{l.label}</a>
+          </li>
+        ))}
+        <li>
+          <a href={alternates[otro]} hreflang={otro} lang={otro} class="sm-link py-2 text-crema" aria-label={`${t('nav.idioma')}: ${languages[otro]}`}>{otro.toUpperCase()}</a>
+        </li>
+        <li>
+          <a href={wa} class="sm-boton sm-boton--lleno !min-h-10 !px-4 !py-2" target="_blank" rel="noopener">{t('nav.pedir')}</a>
+        </li>
+      </ul>
+    </nav>
+
+    <button type="button" class="sm-boton !min-h-11 !px-4 md:hidden" aria-expanded="false" aria-controls="menu-movil" data-menu-abrir>
+      {t('nav.menu')}
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  <div id="menu-movil" class="sm-bg-negro sm-textura fixed inset-0 z-[60] hidden flex-col md:hidden" style="--textura:url('/brand/curvas-crema-vertical.svg')" data-menu role="dialog" aria-modal="true" aria-label={t('nav.principal')}>
+    <div class="sm-wrap flex h-16 items-center justify-between border-b border-[var(--line)]" style="border-bottom-width: var(--rule)">
+      <Logo alto={30} />
+      <button type="button" class="sm-boton !min-h-11 !px-4" data-menu-cerrar>{t('nav.cerrar')}</button>
+    </div>
+    <nav class="sm-wrap flex flex-1 flex-col justify-between py-10" aria-label={t('nav.principal')}>
+      <ul class="space-y-2">
+        <li><a href={path('inicio', lang)} class="sm-display block text-step-4">{t('seccion.inicio')}</a></li>
+        {links.map((l) => (
+          <li><a href={path(l.key, lang)} class="sm-display block text-step-4" aria-current={activa === l.key ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+      <div class="space-y-6">
+        <a href={wa} class="sm-boton sm-boton--lleno w-full" target="_blank" rel="noopener">{t('cta.whatsapp')}</a>
+        <div class="flex items-center justify-between">
+          <a href={alternates[otro]} hreflang={otro} lang={otro} class="sm-etiqueta sm-link">{languages[otro]}</a>
+          <a href={`https://www.instagram.com/${site.instagram}/`} class="sm-etiqueta sm-link" target="_blank" rel="noopener">@{site.instagram}</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Menú móvil accesible: abre/cierra, bloquea el scroll, cierra con Escape y devuelve el foco.
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const abrir = document.querySelector<HTMLButtonElement>('[data-menu-abrir]');
+  const cerrar = document.querySelector<HTMLButtonElement>('[data-menu-cerrar]');
+
+  function setAbierto(abierto: boolean) {
+    if (!menu || !abrir) return;
+    menu.classList.toggle('hidden', !abierto);
+    menu.classList.toggle('flex', abierto);
+    abrir.setAttribute('aria-expanded', String(abierto));
+    document.documentElement.style.overflow = abierto ? 'hidden' : '';
+    (abierto ? cerrar : abrir)?.focus();
+  }
+
+  abrir?.addEventListener('click', () => setAbierto(true));
+  cerrar?.addEventListener('click', () => setAbierto(false));
+  menu?.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setAbierto(false);
+    // Mantiene el foco dentro del menú.
+    if (e.key === 'Tab') {
+      const focables = menu.querySelectorAll<HTMLElement>('a, button');
+      const primero = focables[0];
+      const ultimo = focables[focables.length - 1];
+      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo?.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero?.focus(); }
+    }
+  });
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setAbierto(false)));
+</script>

@@ -1,0 +1,53 @@
+---
+/** Pie de página: logo vertical, frase de marca, pedidos, redes y navegación. */
+import site from '@/data/site.json';
+import lote from '@/data/lote.json';
+import { useTranslations, path, formatAltura } from '@/i18n/utils';
+import { languages, type Lang } from '@/i18n/ui';
+import { waLink } from '@/lib/whatsapp';
+
+interface Props { lang: Lang; alternates: Record<Lang, string> }
+const { lang, alternates } = Astro.props;
+const t = useTranslations(lang);
+const otro: Lang = lang === 'es' ? 'en' : 'es';
+const telefono = `+${site.whatsapp.slice(0, 2)} ${site.whatsapp.slice(2, 5)} ${site.whatsapp.slice(5, 8)} ${site.whatsapp.slice(8)}`;
+---
+<footer class="sm-bg-negro sm-textura border-t border-[var(--line)]" style="border-top-width: var(--rule); --textura:url('/brand/curvas-musgo.svg')">
+  <div class="sm-wrap grid gap-12 py-16 md:grid-cols-12 md:py-24">
+    <div class="md:col-span-5">
+      <img src="/brand/logo-vertical-crema.svg" width="220" height="156" alt="Santo Monte" loading="lazy" decoding="async" class="h-auto w-44 md:w-56" />
+      <p class="sm-serif mt-8 max-w-sm text-step-2">{t('frase.monte')}</p>
+    </div>
+
+    <div class="grid gap-10 sm:grid-cols-3 md:col-span-7">
+      <div>
+        <h2 class="sm-etiqueta mb-4">{t('footer.pedidos')}</h2>
+        <ul class="space-y-2 text-step--1">
+          <li><a class="sm-link" href={waLink(t('wa.general'))} target="_blank" rel="noopener">WhatsApp {telefono}</a></li>
+          <li><a class="sm-link" href={`https://ig.me/m/${site.instagram}`} target="_blank" rel="noopener">DM @{site.instagram}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="sm-etiqueta mb-4">{t('footer.redes')}</h2>
+        <ul class="space-y-2 text-step--1">
+          <li><a class="sm-link" href={`https://www.instagram.com/${site.instagram}/`} target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="sm-etiqueta mb-4">{t('footer.sitio')}</h2>
+        <ul class="space-y-2 text-step--1">
+          <li><a class="sm-link" href={path('cafes', lang)}>{t('nav.cafes')}</a></li>
+          <li><a class="sm-link" href={path('origen', lang)}>{t('nav.origen')}</a></li>
+          <li><a class="sm-link" href={path('aprende', lang)}>{t('nav.aprende')}</a></li>
+          <li><a class="sm-link" href={alternates[otro]} hreflang={otro} lang={otro}>{languages[otro]}</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-[var(--line)]" style="border-top-width: var(--rule)">
+    <div class="sm-wrap sm-etiqueta flex flex-col gap-2 py-5 !text-leche/70 sm:flex-row sm:justify-between">
+      <span>{lote.finca} · {lote.municipio}, {lote.departamento} · {formatAltura(lote.alturaMsnm, lang)} {t('lote.msnm')}</span>
+      <span>{site.nombre} · {t('footer.derechos')}</span>
+    </div>
+  </div>
+</footer>

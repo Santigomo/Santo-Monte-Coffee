@@ -1,0 +1,63 @@
+---
+/**
+ * Metadatos de SEO y redes: title, description, canonical, hreflang,
+ * Open Graph, Twitter y datos estructurados (JSON-LD).
+ */
+import site from '@/data/site.json';
+import type { Lang } from '@/i18n/ui';
+
+export interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Rutas de esta página en cada idioma (para hreflang). */
+  alternates: Record<Lang, string>;
+  /** Imagen para compartir (ruta absoluta o relativa al sitio). */
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'product' | 'article';
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description,
+  alternates,
+  image = '/og/og-image-1200x630.jpg',
+  imageAlt = 'Santo Monte · Café de altura y especialidad',
+  type = 'website',
+  jsonLd = [],
+  noindex = false,
+} = Astro.props;
+
+const base = Astro.site ?? new URL(site.url);
+const canonical = new URL(alternates[lang], base).href;
+const ogImage = new URL(image, base).href;
+const locale = lang === 'es' ? 'es_CO' : 'en_US';
+const altLocale = lang === 'es' ? 'en_US' : 'es_CO';
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+<link rel="alternate" hreflang="es" href={new URL(alternates.es, base).href} />
+<link rel="alternate" hreflang="en" href={new URL(alternates.en, base).href} />
+<link rel="alternate" hreflang="x-default" href={new URL(alternates.es, base).href} />
+
+<meta property="og:site_name" content={site.nombre} />
+<meta property="og:type" content={type === 'product' ? 'product' : type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={locale} />
+<meta property="og:locale:alternate" content={altLocale} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}

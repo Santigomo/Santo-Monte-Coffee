@@ -1,0 +1,81 @@
+---
+/**
+ * Layout base: <head> completo, barra superior de marca, contenido y pie.
+ * Todas las páginas lo usan.
+ */
+import '@/styles/global.css';
+import SEO, { type Props as SEOProps } from '@/components/SEO.astro';
+import Topbar from '@/components/brand/Topbar.astro';
+import Footer from '@/components/sections/Footer.astro';
+import site from '@/data/site.json';
+import { useTranslations } from '@/i18n/utils';
+import type { RouteKey } from '@/i18n/ui';
+
+interface Props extends Omit<SEOProps, 'jsonLd'> {
+  /** Texto central de la barra superior (firma de marca). */
+  seccion: string;
+  /** Página activa en el menú. */
+  activa?: RouteKey;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const { lang, seccion, activa, jsonLd = [], ...seo } = Astro.props;
+const t = useTranslations(lang);
+
+// Datos de la marca presentes en todas las páginas.
+const organizacion = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${site.url}/#organizacion`,
+  name: site.nombre,
+  slogan: t('meta.descriptor'),
+  url: `${site.url}/`,
+  logo: `${site.url}/icon-512.png`,
+  sameAs: [`https://www.instagram.com/${site.instagram}/`],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'sales',
+    telephone: `+${site.whatsapp}`,
+    availableLanguage: ['es', 'en'],
+  },
+};
+---
+<!doctype html>
+<html lang={lang === 'es' ? 'es-CO' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={site.colorTema} />
+    <meta name="color-scheme" content="dark light" />
+    <script is:inline>
+      // Activa las animaciones de entrada solo si el usuario no pidió movimiento reducido.
+      // Si el script de Motion no llega en 2,5 s, se muestra todo sin animar.
+      (function () {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var d = document.documentElement;
+        d.classList.add('sm-motion');
+        setTimeout(function () { if (!window.__smMotion) d.classList.remove('sm-motion'); }, 2500);
+      })();
+    </script>
+    <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/space-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEO lang={lang} {...seo} jsonLd={[organizacion, ...jsonLd]} />
+  </head>
+  <body class="sm-bg-negro min-h-dvh">
+    <a href="#contenido" class="sm-boton sm-boton--lleno fixed left-3 top-3 z-[100] -translate-y-24 focus:translate-y-0">{t('nav.saltar')}</a>
+    <Topbar lang={lang} seccion={seccion} activa={activa} alternates={seo.alternates} />
+    <main id="contenido" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer lang={lang} alternates={seo.alternates} />
+    <script>
+      import '@/scripts/motion';
+      import '@/scripts/pedido';
+    </script>
+  </body>
+</html>
