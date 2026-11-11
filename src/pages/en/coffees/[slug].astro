@@ -1,0 +1,15 @@
+---
+/** Ficha de cada café. Las rutas se generan desde src/content/cafes/*.json. */
+import type { GetStaticPaths } from 'astro';
+import CafePage from '@/components/pages/CafePage.astro';
+import { getCafes, type Cafe } from '@/lib/cafes';
+
+export const getStaticPaths = (async () => {
+  const cafes = await getCafes();
+  return cafes.map((cafe) => ({ params: { slug: cafe.id }, props: { cafe, cafes } }));
+}) satisfies GetStaticPaths;
+
+interface Props { cafe: Cafe; cafes: Cafe[] }
+const { cafe, cafes } = Astro.props;
+---
+<CafePage lang="en" cafe={cafe} cafes={cafes} />

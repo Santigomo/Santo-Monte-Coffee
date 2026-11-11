@@ -1,0 +1,44 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CafesGrid from '@/components/sections/CafesGrid.astro';
+import Guia from '@/components/sections/Guia.astro';
+import ComoPedir from '@/components/sections/ComoPedir.astro';
+import site from '@/data/site.json';
+import lote from '@/data/lote.json';
+import { routes, type Lang } from '@/i18n/ui';
+import { useTranslations, cafePath } from '@/i18n/utils';
+import { getCafes, nombreCafe } from '@/lib/cafes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const cafes = await getCafes();
+const es = lang === 'es';
+
+const lista = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${site.nombre} · ${t('lote.titulo')} ${lote.numero}`,
+  itemListElement: cafes.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: nombreCafe(c, lang),
+    url: `${site.url}${cafePath(c.id, lang)}`,
+  })),
+};
+---
+<BaseLayout
+  lang={lang}
+  title={es ? `Cafés de especialidad · Lote ${lote.numero} · ${site.nombre}` : `Specialty coffees · Lot ${lote.numero} · ${site.nombre}`}
+  description={es
+    ? `Cinco cafés de especialidad de ${lote.finca}, ${lote.municipio}, Huila: Caturra, Borbón Rosado, Typica Mejorado y Pacamara Amarillo lavado y natural. Bolsas de 250 g.`
+    : `Five specialty coffees from ${lote.finca}, ${lote.municipio}, Huila: Caturra, Pink Bourbon, Typica Mejorado and washed and natural Pacamara Amarillo. 250 g bags.`}
+  alternates={routes.cafes}
+  seccion={`${t('seccion.cafes')} ${lote.numero}`}
+  activa="cafes"
+  jsonLd={[lista]}
+>
+  <CafesGrid lang={lang} cafes={cafes} nivel="h1" />
+  <Guia lang={lang} cafes={cafes} />
+  <ComoPedir lang={lang} />
+</BaseLayout>

@@ -1,0 +1,128 @@
+---
+/** Aprende: la serie "La montaña no miente" (6 lecciones) y las recetas de las bitácoras. */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ComoPedir from '@/components/sections/ComoPedir.astro';
+import site from '@/data/site.json';
+import { recetas, brujula } from '@/data/recetas';
+import { routes, type Lang } from '@/i18n/ui';
+import { useTranslations, path } from '@/i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const es = lang === 'es';
+const lecciones = (await getCollection('lecciones')).sort((a, b) => a.data.numero - b.data.numero);
+
+const articulo = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: t('seccion.aprende'),
+  inLanguage: es ? 'es-CO' : 'en',
+  author: { '@id': `${site.url}/#organizacion` },
+  publisher: { '@id': `${site.url}/#organizacion` },
+  about: es ? 'Diferencias entre café comercial y café de especialidad' : 'Differences between commercial and specialty coffee',
+};
+---
+<BaseLayout
+  lang={lang}
+  title={`${t('seccion.aprende')} · ${es ? 'Aprende de café de especialidad' : 'Learn about specialty coffee'} · ${site.nombre}`}
+  description={es
+    ? 'Seis lecciones para diferenciar un café comercial de uno de especialidad: selección, procesos, defectos, pasilla, tostión y cómo leer la bolsa. Más nuestras recetas de V60.'
+    : 'Six lessons on telling commercial coffee from specialty coffee: selection, processing, defects, pasilla, roasting and how to read the bag. Plus our V60 recipes.'}
+  alternates={routes.aprende}
+  seccion={t('seccion.aprende')}
+  activa="aprende"
+  type="article"
+  jsonLd={[articulo]}
+>
+  <section class="sm-bg-negro sm-textura" data-parallax="100" aria-labelledby="aprende-titulo">
+    <div class="sm-wrap py-20 md:py-28">
+      <p class="sm-etiqueta mb-6">{es ? 'Serie · 6 lecciones' : 'Series · 6 lessons'}</p>
+      <h1 id="aprende-titulo" class="sm-display max-w-5xl text-step-5">{t('seccion.aprende')}</h1>
+      <p class="sm-serif mt-6 max-w-2xl text-step-2 text-crema">
+        {es ? 'Para quien diga que «todo el café sabe igual».' : 'For whoever says “all coffee tastes the same”.'}
+      </p>
+      <nav class="mt-12" aria-label={es ? 'Lecciones' : 'Lessons'}>
+        <ol class="flex flex-wrap gap-2">
+          {lecciones.map((l) => (
+            <li><a href={`#leccion-${l.data.numero}`} class="sm-boton !min-h-10 !px-3 !py-2">L0{l.data.numero} · {l.data.titulo[lang]}</a></li>
+          ))}
+          <li><a href="#recetas" class="sm-boton sm-boton--lleno !min-h-10 !px-3 !py-2">{es ? 'Recetas' : 'Recipes'}</a></li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  {lecciones.map((l, i) => {
+    const d = l.data;
+    const claro = i % 2 === 0;
+    return (
+      <section id={`leccion-${d.numero}`} class:list={[claro ? 'sm-bg-papel' : 'sm-bg-negro', 'border-t border-[var(--line)]']} style="border-top-width: var(--rule)" aria-labelledby={`leccion-${d.numero}-titulo`}>
+        <div class="sm-wrap grid gap-10 py-16 md:py-24 lg:grid-cols-12 lg:items-center">
+          <figure class:list={['lg:col-span-5', i % 2 === 1 && 'lg:order-2 lg:col-start-8']} data-reveal>
+            <Image src={es ? d.portadaEs : d.portadaEn} alt={d.portadaAlt[lang]} widths={[360, 540, 720]} sizes="(min-width: 1024px) 34vw, 86vw" quality={74} class="aspect-[3/4] w-full max-w-md object-cover shadow-[0_30px_60px_-30px_rgb(0_0_0/0.6)]" />
+          </figure>
+          <div class:list={['lg:col-span-6', i % 2 === 0 ? 'lg:col-start-7' : 'lg:col-start-1 lg:order-1']} data-reveal data-delay="0.1">
+            <p class="sm-etiqueta mb-4">{es ? 'Lección' : 'Lesson'} 0{d.numero} / 06</p>
+            <h2 id={`leccion-${d.numero}-titulo`} class="sm-display text-step-4">{d.titulo[lang]}</h2>
+            <p class="sm-serif mt-4 text-step-2">{d.bajada[lang]}</p>
+            <div class="mt-8 max-w-xl space-y-4">
+              {d.cuerpo[lang].map((p) => <p>{p}</p>)}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <section id="recetas" class="sm-bg-verde sm-textura" style="--textura:url('/brand/curvas-musgo.svg')" aria-labelledby="recetas-titulo">
+    <div class="sm-wrap py-20 md:py-28">
+      <p class="sm-etiqueta mb-5">{es ? 'Bitácoras' : 'Logbooks'}</p>
+      <h2 id="recetas-titulo" class="sm-display text-step-5" data-reveal>{es ? 'Recetas del monte' : 'Mountain recipes'}</h2>
+      <div class="mt-14 grid gap-8 lg:grid-cols-2">
+        {recetas.map((r) => (
+          <article class="sm-vidrio !rounded-sm p-6 md:p-8" aria-labelledby={`receta-${r.id}`} data-reveal>
+            <p class="sm-etiqueta">{r.cafe[lang]}</p>
+            <h3 id={`receta-${r.id}`} class="sm-display mt-3 text-step-3">{r.titulo[lang]}</h3>
+            <p class="mt-4 text-step--1 text-leche/90">{r.bajada[lang]}</p>
+            <dl class="mt-8 grid grid-cols-2 gap-px bg-[var(--line)] sm:grid-cols-3">
+              {r.datos.map((x) => (
+                <div class="bg-verde p-4">
+                  <dt class="sm-etiqueta order-2">{x.etiqueta[lang]}</dt>
+                  <dd class="font-condensed text-step-3 leading-none">{x.valor}</dd>
+                </div>
+              ))}
+            </dl>
+            <ol class="mt-8">
+              {r.pasos.map((p) => (
+                <li class="flex gap-5 border-t border-[var(--line)] py-3" style="border-top-width: var(--rule)">
+                  <span class="font-condensed w-14 shrink-0 text-step-1">{p.tiempo}</span>
+                  <span class="text-step--1">{p.texto[lang]}</span>
+                </li>
+              ))}
+            </ol>
+            <p class="sm-mano mt-6 text-step-1">{r.cierre[lang]}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-16" data-reveal>
+        <h3 class="sm-serif text-step-2">{es ? 'Brújula de extracción' : 'Extraction compass'}</h3>
+        <p class="mt-2 text-step--1 text-leche/85">{es ? '¿Te sale agria o amarga? Mueve una sola cosa a la vez.' : 'Sour or bitter? Change one thing at a time.'}</p>
+        <dl class="mt-6 grid grid-cols-2 border-l border-t border-[var(--line)] md:grid-cols-4" style="border-width: var(--rule) 0 0 var(--rule)">
+          {brujula.map((b) => (
+            <div class="border-b border-r border-[var(--line)] p-5" style="border-width: 0 var(--rule) var(--rule) 0">
+              <dt class="sm-contorno text-step-3">{b.sintoma[lang]}</dt>
+              <dd class="sm-etiqueta mt-2 !text-leche">→ {b.ajuste[lang]}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <a href={path('cafes', lang)} class="sm-boton sm-boton--lleno mt-14">{t('cta.verCafes')} <span class="sm-flecha" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <ComoPedir lang={lang} />
+</BaseLayout>

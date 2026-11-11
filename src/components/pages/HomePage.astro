@@ -1,0 +1,49 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import Cinta from '@/components/sections/Cinta.astro';
+import Manifiesto from '@/components/sections/Manifiesto.astro';
+import CafesGrid from '@/components/sections/CafesGrid.astro';
+import Guia from '@/components/sections/Guia.astro';
+import Proceso from '@/components/sections/Proceso.astro';
+import Kits from '@/components/sections/Kits.astro';
+import AprendeTeaser from '@/components/sections/AprendeTeaser.astro';
+import ComoPedir from '@/components/sections/ComoPedir.astro';
+import site from '@/data/site.json';
+import { routes, type Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import { getCafes } from '@/lib/cafes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const cafes = await getCafes();
+
+const webSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.nombre,
+  url: `${site.url}/`,
+  inLanguage: lang === 'es' ? 'es-CO' : 'en',
+  publisher: { '@id': `${site.url}/#organizacion` },
+};
+---
+<BaseLayout
+  lang={lang}
+  title={`${site.nombre} · ${t('meta.descriptor')}`}
+  description={t('meta.description')}
+  alternates={routes.inicio}
+  seccion={`${t('meta.descriptor')} · @${site.instagram}`}
+  activa="inicio"
+  jsonLd={[webSite]}
+>
+  <Hero lang={lang} cafes={cafes} />
+  <Cinta lang={lang} cafes={cafes} />
+  <Manifiesto lang={lang} />
+  <CafesGrid lang={lang} cafes={cafes} />
+  <Guia lang={lang} cafes={cafes} />
+  <Proceso lang={lang} />
+  <Kits lang={lang} />
+  <AprendeTeaser lang={lang} />
+  <ComoPedir lang={lang} />
+</BaseLayout>

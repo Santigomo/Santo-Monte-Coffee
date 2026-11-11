@@ -1,0 +1,185 @@
+---
+/**
+ * Ficha de un café, con la composición de la pieza "Lo que el monte vio":
+ * bolsa grande, variedad en serif, proceso en contorno, ficha técnica,
+ * perfil numerado, historia y pedido por WhatsApp.
+ */
+import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Bolsa from '@/components/product/Bolsa.astro';
+import PedidoWhatsApp from '@/components/product/PedidoWhatsApp.astro';
+import FichaLote from '@/components/brand/FichaLote.astro';
+import site from '@/data/site.json';
+import lote from '@/data/lote.json';
+import type { Lang } from '@/i18n/ui';
+import { useTranslations, cafePath, path, formatAltura } from '@/i18n/utils';
+import { nombreCafe, mensajePedido, type Cafe } from '@/lib/cafes';
+
+interface Props { lang: Lang; cafe: Cafe; cafes: Cafe[] }
+const { lang, cafe, cafes } = Astro.props;
+const t = useTranslations(lang);
+const d = cafe.data;
+const es = lang === 'es';
+const nombre = nombreCafe(cafe, lang);
+const proceso = t(`proceso.${d.proceso}`);
+const indice = cafes.findIndex((c) => c.id === cafe.id);
+const anterior = cafes[(indice - 1 + cafes.length) % cafes.length]!;
+const siguiente = cafes[(indice + 1) % cafes.length]!;
+const num = String(indice + 1).padStart(2, '0');
+const total = String(cafes.length).padStart(2, '0');
+
+// Imagen para compartir: la foto de la bolsa recortada a 1200×630.
+const og = await getImage({ src: d.foto, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 78 });
+const bolsaJsonLd = await getImage({ src: d.bolsa, width: 800, format: 'png' });
+
+const descripcion = es
+  ? `${nombre}, café de especialidad de ${lote.finca} (${lote.municipio}, Huila) a ${formatAltura(lote.alturaMsnm, lang)} m s. n. m. Notas de ${d.notas.es.join(', ').toLowerCase()}. Bolsa de 250 g. Pídelo por WhatsApp.`
+  : `${nombre}, specialty coffee from ${lote.finca} (${lote.municipio}, Huila) at ${formatAltura(lote.alturaMsnm, lang)} m a.s.l. Notes of ${d.notas.en.join(', ').toLowerCase()}. 250 g bag. Order on WhatsApp.`;
+
+const producto = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `${site.nombre} ${nombre}`,
+  description: descripcion,
+  brand: { '@type': 'Brand', name: site.nombre },
+  image: [new URL(bolsaJsonLd.src, site.url).href, new URL(og.src, site.url).href],
+  url: `${site.url}${cafePath(cafe.id, lang)}`,
+  sku: cafe.id,
+  category: es ? 'Café de especialidad en grano' : 'Whole bean specialty coffee',
+  countryOfOrigin: { '@type': 'Country', name: 'Colombia' },
+  size: d.presentaciones.map((g) => `${g} g`).join(', '),
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: t('ficha.variedad'), value: d.variedad[lang] },
+    { '@type': 'PropertyValue', name: t('ficha.proceso'), value: proceso },
+    { '@type': 'PropertyValue', name: t('ficha.productor'), value: lote.productor },
+    { '@type': 'PropertyValue', name: t('ficha.origen'), value: `${lote.municipio}, ${lote.departamento}, ${lote.pais}` },
+    { '@type': 'PropertyValue', name: t('ficha.altura'), value: `${lote.alturaMsnm} m`, unitCode: 'MTR' },
+    { '@type': 'PropertyValue', name: t('ficha.notas'), value: d.notas[lang].join(', ') },
+  ],
+};
+const migas = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: t('seccion.inicio'), item: `${site.url}${path('inicio', lang)}` },
+    { '@type': 'ListItem', position: 2, name: t('nav.cafes'), item: `${site.url}${path('cafes', lang)}` },
+    { '@type': 'ListItem', position: 3, name: nombre, item: `${site.url}${cafePath(cafe.id, lang)}` },
+  ],
+};
+---
+<BaseLayout
+  lang={lang}
+  title={`${nombre} · ${es ? 'Café de especialidad' : 'Specialty coffee'} · ${site.nombre}`}
+  description={descripcion}
+  alternates={{ es: cafePath(cafe.id, 'es'), en: cafePath(cafe.id, 'en') }}
+  seccion={`${t('lote.titulo')} ${lote.numero} · ${es ? 'Café' : 'Coffee'} ${num}/${total}`}
+  activa="cafes"
+  image={og.src}
+  imageAlt={d.fotoAlt[lang]}
+  type="product"
+  jsonLd={[producto, migas]}
+>
+  <article class="sm-bg-papel sm-textura" style="--textura:url('/brand/curvas-negro.svg')" aria-labelledby="cafe-titulo">
+    <nav aria-label={es ? 'Ruta' : 'Breadcrumb'} class="sm-wrap sm-etiqueta pt-6">
+      <ol class="flex flex-wrap gap-2">
+        <li><a class="sm-link" href={path('cafes', lang)}>{t('nav.cafes')}</a> /</li>
+        <li aria-current="page">{nombre}</li>
+      </ol>
+    </nav>
+
+    <div class="sm-wrap grid gap-10 pb-16 pt-8 lg:grid-cols-12 lg:gap-8 lg:pb-24">
+      <!-- Bolsa -->
+      <div class="relative lg:col-span-5 lg:col-start-1">
+        <div class="lg:sticky lg:top-24">
+          <div class="relative mx-auto w-[72%] max-w-[440px] lg:w-[88%]" data-rise>
+            <Bolsa src={d.bolsa} alt={`${es ? 'Bolsa de' : 'Bag of'} ${nombre}, 250 g`} sizes="(min-width: 1024px) 34vw, 72vw" prioridad widths={[320, 480, 640, 800, 1000]} />
+          </div>
+          <p class="sm-mano mt-4 text-center text-step-1 !text-verde">{t('frase.aprobado').toLowerCase()}</p>
+        </div>
+      </div>
+
+      <!-- Información -->
+      <div class="lg:col-span-6 lg:col-start-7">
+        <p class="sm-etiqueta mb-6 flex flex-wrap items-center gap-3">
+          <span>{t('frase.vio')}</span>
+          <span aria-hidden="true">·</span>
+          <span>N.º {num}</span>
+          {d.limitado && <span class="border border-verde px-2 py-0.5" style="border-width: var(--rule)">{t('ficha.limitado')}</span>}
+        </p>
+        <h1 id="cafe-titulo" class="leading-none">
+          <span class="sm-serif block text-step-4">{d.variedad[lang]}</span>
+          <span class="sm-contorno mt-2 block text-step-5">{proceso}</span>
+        </h1>
+        <p class="sm-serif mt-8 text-step-2">{d.titular[lang]}</p>
+
+        <!-- Perfil numerado, como en la pieza del lote -->
+        <dl class="mt-10 grid grid-cols-2 border-l border-t border-[var(--line)] sm:grid-cols-4" style="border-width: var(--rule) 0 0 var(--rule)">
+          <div class="border-b border-r border-[var(--line)] bg-negro p-3 text-leche" style="border-width: 0 var(--rule) var(--rule) 0">
+            <dt class="sm-etiqueta !text-crema">{t('ficha.perfil')}</dt>
+            <dd class="mt-1 text-step--1">{t('ficha.notas')}</dd>
+          </div>
+          {d.notas[lang].map((n, i) => (
+            <div class="border-b border-r border-[var(--line)] p-3" style="border-width: 0 var(--rule) var(--rule) 0">
+              <dt class="sm-etiqueta">0{i + 1}</dt>
+              <dd class="font-condensed mt-1 text-step-1 uppercase leading-none">{n}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="mt-10 space-y-4 text-step-0">
+          {d.historia[lang].map((p) => <p>{p}</p>)}
+          <p><strong>{t('ficha.paraTi')}</strong> {d.paraTiSi[lang].toLowerCase()}.</p>
+        </div>
+
+        <FichaLote lang={lang} class="mt-10" extra={[
+          { label: t('ficha.variedad'), valor: d.variedad[lang] },
+          { label: t('ficha.proceso'), valor: proceso },
+          { label: t('ficha.presentacion'), valor: `${d.presentaciones.map((g) => `${g} g`).join(' · ')} · ${t('ficha.grano')}` },
+        ]} />
+
+        <p class="font-condensed mt-10 flex items-baseline justify-between bg-crema px-5 py-3 text-step-2 uppercase text-negro">
+          <span>{d.presentaciones[0]} g</span><span>{t('precio.pregunta')}</span>
+        </p>
+
+        <div class="mt-10">
+          <PedidoWhatsApp lang={lang} id="pedido" producto={nombre} presentaciones={d.presentaciones.map((g) => `${g} g`)} mensaje={mensajePedido(lang)} />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Foto en contexto -->
+  <section class="sm-bg-negro" aria-label={d.fotoAlt[lang]}>
+    <div class="sm-wrap grid gap-8 py-16 md:grid-cols-12 md:items-center md:py-24">
+      <figure class="md:col-span-6" data-reveal>
+        <Image src={d.foto} alt={d.fotoAlt[lang]} widths={[480, 720, 960, 1200]} sizes="(min-width: 768px) 46vw, 92vw" quality={72} class="aspect-[4/5] w-full object-cover" />
+      </figure>
+      <div class="md:col-span-5 md:col-start-8" data-reveal data-delay="0.1">
+        <p class="sm-etiqueta mb-5">{d.perfil[lang]}</p>
+        <p class="sm-serif text-step-3">{t('frase.monte')}</p>
+        <a href={path('aprende', lang)} class="sm-boton mt-8">{t('seccion.aprende')} <span class="sm-flecha" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anterior / siguiente -->
+  <nav class="sm-bg-verde" aria-label={es ? 'Otros cafés del lote' : 'Other coffees in the lot'}>
+    <div class="sm-wrap grid sm:grid-cols-2">
+      {[{ c: anterior, rel: 'prev', label: es ? '← Anterior' : '← Previous' }, { c: siguiente, rel: 'next', label: es ? 'Siguiente →' : 'Next →' }].map(({ c, rel, label }) => (
+        <a href={cafePath(c.id, lang)} rel={rel} class:list={['sm-vecino group block py-10 transition-colors hover:bg-negro/30', rel === 'next' ? 'sm-vecino--sig sm:pl-8 sm:text-right' : 'sm:pr-8']}>
+          <span class="sm-etiqueta">{label}</span>
+          <span class="sm-serif mt-2 block text-step-2">{c.data.variedad[lang]}</span>
+          <span class="sm-etiqueta !text-leche">{t(`proceso.${c.data.proceso}`)}</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+</BaseLayout>
+
+<style>
+  .sm-vecino--sig { border-top: var(--rule) solid var(--line); }
+  @media (min-width: 640px) {
+    .sm-vecino--sig { border-top: 0; border-left: var(--rule) solid var(--line); }
+  }
+</style>

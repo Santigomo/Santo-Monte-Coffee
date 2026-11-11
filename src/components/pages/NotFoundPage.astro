@@ -1,0 +1,23 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { routes, type Lang } from '@/i18n/ui';
+import { useTranslations, path } from '@/i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const es = lang === 'es';
+---
+<BaseLayout lang={lang} title={es ? 'Página no encontrada · Santo Monte' : 'Page not found · Santo Monte'} description={t('meta.description')} alternates={routes.inicio} seccion={`404 · ${t('seccion.noEncontrado')}`} noindex>
+  <section class="sm-bg-negro sm-textura grid min-h-[75svh] place-items-center" aria-labelledby="nf-titulo">
+    <div class="sm-wrap text-center">
+      <img src="/brand/ojo-sticker-crema.svg" alt="" width="240" height="135" class="mx-auto w-40 md:w-60" />
+      <h1 id="nf-titulo" class="sm-display mt-10 text-step-5">404</h1>
+      <p class="sm-serif mt-4 text-step-2 text-crema">{es ? 'El monte no vio esta página.' : 'The mountain never saw this page.'}</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={path('inicio', lang)} class="sm-boton sm-boton--lleno">{t('seccion.inicio')}</a>
+        <a href={path('cafes', lang)} class="sm-boton">{t('cta.verCafes')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
