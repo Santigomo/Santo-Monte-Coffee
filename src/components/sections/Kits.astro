@@ -22,8 +22,8 @@ const hayDisponibles = kits.some((k) => k.data.disponible);
     <div class="lg:col-span-5" data-reveal>
       <p class="sm-etiqueta mb-5">{es ? 'Métodos de preparación' : 'Brewing methods'}</p>
       <h2 id="kits-titulo" class="leading-[0.9]">
-        <span class="sm-display block text-step-4">Kits</span>
-        {!hayDisponibles && <span class="sm-contorno block text-step-4">{es ? 'Próximamente' : 'Coming soon'}</span>}
+        <span class="sm-display block text-step-5">Kits</span>
+        {!hayDisponibles && <span class="sm-contorno block text-step-3 [overflow-wrap:anywhere]">{es ? 'Próximamente' : 'Coming soon'}</span>}
       </h2>
       <p class="mt-6 max-w-md text-leche/85">
         {es ? 'Estamos armando kits para que prepares en casa como en nuestras bitácoras. Escríbenos y te avisamos primero.' : 'We’re putting together kits so you can brew at home like in our logbooks. Message us and you’ll be the first to know.'}

@@ -68,7 +68,7 @@
   --font-mono: 'Space Mono', ui-monospace, monospace;
   --font-hand: 'Nothing You Could Do', cursive;
 
-  --text-step--1: clamp(0.74rem, 0.71rem + 0.15vw, 0.84rem);
+  --text-step--1: clamp(0.78rem, 0.75rem + 0.15vw, 0.86rem);
   --text-step-0: clamp(0.95rem, 0.92rem + 0.2vw, 1.06rem);
   --text-step-1: clamp(1.25rem, 1.1rem + 0.7vw, 1.6rem);
   --text-step-2: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem);

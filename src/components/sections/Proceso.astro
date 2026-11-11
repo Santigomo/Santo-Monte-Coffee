@@ -11,10 +11,10 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const es = lang === 'es';
 const fotos = [
-  { src: granos, alt: es ? 'Granos de café recién tostados.' : 'Freshly roasted coffee beans.', pie: es ? 'Tostión' : 'Roast', clase: 'aspect-[4/5]' },
-  { src: molino, alt: es ? 'Molino manual junto a granos de café.' : 'Hand grinder next to coffee beans.', pie: es ? 'Molienda' : 'Grind', clase: 'aspect-[4/5] md:mt-16' },
-  { src: v60, alt: es ? 'Café recién servido desde un V60.' : 'Coffee freshly served from a V60.', pie: es ? 'Taza' : 'Cup', clase: 'aspect-[4/5]' },
-  { src: manos, alt: es ? 'Manos pegando la etiqueta de Santo Monte en una bolsa.' : 'Hands sticking the Santo Monte label on a bag.', pie: es ? 'Etiqueta a mano' : 'Hand-labelled', clase: 'aspect-[4/5] md:mt-16' },
+  { src: granos, alt: es ? 'Granos de café recién tostados.' : 'Freshly roasted coffee beans.', pie: es ? 'Tostión' : 'Roast' },
+  { src: molino, alt: es ? 'Molino manual junto a granos de café.' : 'Hand grinder next to coffee beans.', pie: es ? 'Molienda' : 'Grind' },
+  { src: v60, alt: es ? 'Café recién servido desde un V60.' : 'Coffee freshly served from a V60.', pie: es ? 'Taza' : 'Cup' },
+  { src: manos, alt: es ? 'Manos pegando la etiqueta de Santo Monte en una bolsa.' : 'Hands sticking the Santo Monte label on a bag.', pie: es ? 'Etiqueta a mano' : 'Hand-labelled' },
 ];
 ---
 <section class="sm-bg-negro" aria-labelledby="proceso-titulo">
@@ -25,7 +25,7 @@ const fotos = [
     </div>
     <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5" data-reveal-group>
       {fotos.map((f, i) => (
-        <figure class:list={[f.clase.includes('mt-16') ? 'md:mt-16' : '']}>
+        <figure class:list={[i % 2 === 1 && 'md:mt-16']}>
           <div class="overflow-hidden">
             <Image src={f.src} alt={f.alt} widths={[320, 480, 640, 800]} sizes="(min-width: 768px) 23vw, 46vw" quality={70} class="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-[var(--ease-monte)] hover:scale-[1.04]" />
           </div>

@@ -129,7 +129,6 @@ const migas = {
 
         <div class="mt-10 space-y-4 text-step-0">
           {d.historia[lang].map((p) => <p>{p}</p>)}
-          <p><strong>{t('ficha.paraTi')}</strong> {d.paraTiSi[lang].toLowerCase()}.</p>
         </div>
 
         <FichaLote lang={lang} class="mt-10" extra={[
@@ -157,7 +156,7 @@ const migas = {
       </figure>
       <div class="md:col-span-5 md:col-start-8" data-reveal data-delay="0.1">
         <p class="sm-etiqueta mb-5">{d.perfil[lang]}</p>
-        <p class="sm-serif text-step-3">{t('frase.monte')}</p>
+        <p class="sm-serif text-step-3">{t('ficha.paraTi')} {d.paraTiSi[lang].toLowerCase()}.</p>
         <a href={path('aprende', lang)} class="sm-boton mt-8">{t('seccion.aprende')} <span class="sm-flecha" aria-hidden="true">→</span></a>
       </div>
     </div>

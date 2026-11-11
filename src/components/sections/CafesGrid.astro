@@ -23,13 +23,19 @@ const Titulo = nivel;
       <FichaLote lang={lang} class="lg:col-span-4 lg:col-start-9" />
     </div>
 
-    <div class="sm-celdas grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" data-reveal-group>
-      {cafes.map((cafe, i) => <CafeCard cafe={cafe} lang={lang} total={cafes.length} indice={i} />)}
+    <div class="sm-celdas -mx-[var(--gutter)] flex snap-x snap-mandatory overflow-x-auto scroll-px-[var(--gutter)] px-[var(--gutter)] sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3 xl:grid-cols-5" data-reveal-group>
+      {cafes.map((cafe, i) => <CafeCard cafe={cafe} lang={lang} total={cafes.length} indice={i} nivel={nivel === 'h1' ? 'h2' : 'h3'} />)}
     </div>
   </div>
 </section>
 <style>
   /* Líneas de la grilla a 1,5 px */
-  .sm-celdas { border: solid var(--line); border-width: var(--rule) 0 0 var(--rule); }
-  .sm-celdas > :global(*) { border: solid var(--line); border-width: 0 var(--rule) var(--rule) 0; }
+  .sm-celdas { scrollbar-width: thin; }
+  .sm-celdas > :global(*) { border: solid var(--line); border-width: var(--rule) var(--rule) var(--rule) 0; flex: 0 0 82%; scroll-snap-align: start; }
+  .sm-celdas > :global(*:first-child) { border-left-width: var(--rule); }
+  @media (min-width: 640px) {
+    .sm-celdas { border: solid var(--line); border-width: var(--rule) 0 0 var(--rule); }
+    .sm-celdas > :global(*) { border-width: 0 var(--rule) var(--rule) 0; }
+    .sm-celdas > :global(*:first-child) { border-left-width: 0; }
+  }
 </style>
