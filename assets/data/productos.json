@@ -1,0 +1,65 @@
+{
+  "_nota": "Datos del Lote 1 con precio público vigente al 21 oct 2026. Revisa precios antes de publicar. El Ombligón no se publica.",
+  "lote": {
+    "numero": "01",
+    "productor": "Anaya",
+    "origen": "Pitalito, Huila, Colombia",
+    "altura": "1650 m s. n. m.",
+    "tostion": "2026-10-02"
+  },
+  "productos": [
+    {
+      "id": "pacamara-amarillo-natural",
+      "variedad": "Pacamara Amarillo",
+      "proceso": "Natural",
+      "notas": ["Chocoso", "Cacao", "Caramelo", "Cítrico"],
+      "presentaciones": [{ "gramos": 250, "precio_cop": 70000 }],
+      "para_ti_si": "Te gusta el chocolate y el caramelo",
+      "bolsa": "productos/bolsa-pacamara-amarillo-natural-250g",
+      "foto": "fotos/producto/pacamara-amarillo-natural-250g"
+    },
+    {
+      "id": "pacamara-amarillo-lavado",
+      "variedad": "Pacamara Amarillo",
+      "proceso": "Lavado",
+      "notas": ["Melocotón", "Durazno", "Frutos amarillos"],
+      "presentaciones": [{ "gramos": 250, "precio_cop": 60000 }],
+      "para_ti_si": "Buscas algo frutal y brillante",
+      "bolsa": "productos/bolsa-pacamara-amarillo-lavado-250g",
+      "foto": "fotos/producto/pacamara-amarillo-lavado-250g-negra-01"
+    },
+    {
+      "id": "typica-mejorado-lavado",
+      "variedad": "Typica Mejorado",
+      "proceso": "Lavado",
+      "notas": ["Sandía", "Cítrico", "Frutos rojos"],
+      "presentaciones": [{ "gramos": 250, "precio_cop": 60000 }],
+      "para_ti_si": "Buscas algo frutal y brillante",
+      "bolsa": "productos/bolsa-typica-mejorado-lavado-250g",
+      "foto": "fotos/producto/typica-mejorado-lavado-250g"
+    },
+    {
+      "id": "borbon-rosado-lavado",
+      "variedad": "Borbón Rosado",
+      "proceso": "Lavado",
+      "notas": ["Melcocha", "Miel", "Cítrico", "Durazno"],
+      "presentaciones": [{ "gramos": 250, "precio_cop": 45000 }],
+      "para_ti_si": "Te gusta la miel y el durazno",
+      "bolsa": "productos/bolsa-borbon-rosado-lavado-250g",
+      "foto": "fotos/producto/borbon-rosado-250g"
+    },
+    {
+      "id": "caturra-lavado",
+      "variedad": "Caturra",
+      "proceso": "Lavado",
+      "notas": ["Caramelo", "Melcocha", "Frutos secos"],
+      "presentaciones": [
+        { "gramos": 250, "precio_cop": 35000, "bolsa": "productos/bolsa-caturra-lavado-250g" },
+        { "gramos": 500, "precio_cop": 50000, "bolsa": "productos/bolsa-caturra-lavado-500g" }
+      ],
+      "para_ti_si": "Estás empezando en el café de especialidad",
+      "bolsa": "productos/bolsa-caturra-lavado-250g",
+      "foto": "fotos/producto/caturra-250g-01"
+    }
+  ]
+}

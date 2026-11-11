@@ -1,0 +1,26 @@
+{
+  "name": "Santo Monte",
+  "short_name": "Santo Monte",
+  "description": "Café de altura y especialidad",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#2F3B2A",
+  "background_color": "#0E0D0B",
+  "display": "standalone"
+}
