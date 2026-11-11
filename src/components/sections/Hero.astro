@@ -25,12 +25,14 @@ const estilos = [
   'left-[73%] w-[27%] z-10 bottom-[4%]',
 ];
 ---
-<section class="sm-bg-negro sm-textura relative overflow-hidden" data-parallax="120" aria-labelledby="hero-titulo">
+<section class="sm-bg-negro relative isolate overflow-hidden" data-parallax="120" aria-labelledby="hero-titulo">
+  <!-- Curvas de nivel como <img>: el navegador la descubre y prioriza antes que un fondo CSS (mejor LCP). -->
+  <img src="/brand/curvas-crema.svg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" class="pointer-events-none absolute inset-0 -z-10 h-full w-full scale-110 object-cover" style="transform: translate3d(0, var(--parallax, 0px), 0)" />
   <div class="sm-grilla pointer-events-none absolute inset-0 -z-10 opacity-60" aria-hidden="true"></div>
   <div class="sm-wrap grid min-h-[calc(100svh-4rem)] items-center gap-10 pb-10 pt-10 lg:grid-cols-12 lg:gap-6 lg:pb-16">
-    <div class="lg:col-span-6 xl:col-span-6">
+    <div class="lg:col-span-7">
       <p class="sm-etiqueta mb-6">{t('lote.titulo')} {lote.numero} · {lote.finca} · {lote.municipio}, {lote.departamento}</p>
-      <h1 id="hero-titulo" class="sm-display text-step-5">
+      <h1 id="hero-titulo" class="sm-display text-[clamp(4rem,1.6rem+10.4vw,12rem)] lg:text-[clamp(5rem,0.6rem+9.4vw,12.5rem)]">
         <span class="block">{lang === 'es' ? 'Lo que' : 'What the'}</span>
         <span class="block">{lang === 'es' ? 'el monte' : 'mountain'}</span>
         <span class="block">{lang === 'es' ? 'vio' : 'saw'}</span>
@@ -47,8 +49,8 @@ const estilos = [
       </div>
     </div>
 
-    <div class="relative lg:col-span-6 xl:col-span-6">
-      <div class="relative mx-auto aspect-[10/9] w-full max-w-[640px]">
+    <div class="relative lg:col-span-5">
+      <div class="relative mx-auto aspect-[10/9] w-full max-w-[600px] lg:scale-[1.12] lg:origin-bottom">
         {abanico.map((cafe, i) => (
           <div class:list={['absolute', estilos[i]]} data-rise>
             <Bolsa
